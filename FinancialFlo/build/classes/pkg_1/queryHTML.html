@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<form id="geosearch">
-<p><label for="query">Enter Location:</label>
+<form id="finance">
+<p><label for="query">Enter Company:</label>
 <input id="query" type="text"/></p>
 <p><input type="submit" value="Make Query"/></p>
 </form>
@@ -17,7 +17,7 @@
 function makeQuery(e){
   e.preventDefault(); // do not send off form 
   var container = document.getElementById('results');
-  var location = document.getElementById('query').value || 'SFO';
+  var company = document.getElementById('query').value || 'KMB';
   var content = '';
 
   var BASE_URI = 'http://query.yahooapis.com/v1/yql';
@@ -42,32 +42,25 @@ function makeQuery(e){
     return parts.join('&');
   };
   
-  // Run YQL query to GeoPlanet API and extract data from response  
-  runQuery('select * from geo.places where text="' + location + '"',
+  // Run YQL query to Finance API and extract data from response  
+  runQuery('SELECT * FROM yahoo.finance.balancesheet WHERE symbol=' + company + '"',
     function(rsp) {
       if(rsp.data){
-        var place = rsp.data.query.results.place;
-        if(place[0]){
-          place = place[0];
+        var company = rsp.data.query.results.balancesheet;
+        if(company[0]){
+          company = company[0];
         }
-        var name      = place.name || 'Unknown';
-        var country   = place.country.content || place[0].country.content ||
-                        'Unknown';
-        var latitude  = place.centroid.latitude || 'Unknown';
-        var longitude = place.centroid.longitude || 'Unknown';
-        var city      = place.locality1.content || 'Unknown';
-        var state     = place.admin1.content || 'Unknown';
-        var county    = place.admin2.content || 'Unknown';
-        var zip       = place.postal ? place.postal.content : 'Unknown';
-  
-        content = '<ul><li><strong>Place Name: </strong>' + name + '</li>'+
-        '<li><strong>City/Town: </strong>' + city + '</li>' +
-        '<li><strong>County/District: </strong>' + county + '</li>' +
-        '<li><strong>State/Province: </strong>' + state + '</li>' +
-        '<li><strong>Zipcode: </strong>' + zip + '</li>' +
-        '<li><strong>Country: </strong>' + country + '</li>' +
-        '<li><strong>Latitude: </strong>' + latitude + '</li>' +
-        '<li><strong>Longitude: </strong>' + longitude + '</li></ul>';
+        var name      = company.symbol || 'Unknown';
+        var timeframe   = company.timeframe || 'Unknown';
+        var period = company.statement.period || 'Unknown';
+        var cashAndCashE = company.statement.CashAndCashEquivalents || 'Unknown';
+        var shortTermInvestments = company.statement.ShortTermInvestments || 'Unknown';
+
+ 
+        content = '<ul><li><strong>Company Name: </strong>' + name + '</li>' +
+        '<li><strong>Timeframe: </strong>' + timeframe + '</li>'+ '<li><strong>Period: ' + period +
+        '</li>' + '<li><strong>Cash and Cash Equalivalents: ' + cashAndCashE + '</li>' + '<li><strong>Short Term Invesments: ' +
+        shortTermInvestments + '<li>';
         container.innerHTML = content;
       }
       else {
@@ -79,4 +72,3 @@ function makeQuery(e){
 var form = document.getElementById('geosearch');
 form.addEventListener('submit',makeQuery,false);
 </script>
-
