@@ -1,3 +1,35 @@
+Income Statement Variables needed:
+------------------------------------
+'Net Income'
+'Operating Income'
+'Total Revenue'
+'Earnings Before Interest And Taxes'
+'Interest Expense'
+
+
+Balance Sheet Variables needed:
+--------------------------------
+'Total Current Assets'
+'Total Assets
+'Total Current Liabilities'
+'Total Liabilities'
+'Total Equity'
+'Inventory'
+'Net Receivables'
+
+
+Summary Variables needed:
+--------------------------------
+Stock Price
+P/E
+Market Cap
+EPS
+Next Earnings Date
+Div & Yield
+
+
+
+
 Market Ratios
 ---------------------
 EPS Earnings per share (higher better)
@@ -20,9 +52,9 @@ Asset Management Ratios
 ---------------------
 Inventory Turn over = Annual Sales/ Inventory (higher better)
 Days Sales outstanding (lower better)
-Accounts Recieveable Turnover = Annual Sales/Accounts Recieveables (higher better)
+Accounts Recieveable Turnover = Total Revenue/Accounts Recieveables (higher better)
 
-Optional: Total Assets Turnover = Annual Sales/Total Assets (higher better)
+Optional: Total Assets Turnover = Total Revenue/Total Assets (higher better)
 
 Leverage/Debt Ratios
 ---------------------
