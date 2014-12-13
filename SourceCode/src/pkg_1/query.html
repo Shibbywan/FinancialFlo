@@ -20,7 +20,7 @@ function makeQuery(e){
   var company = document.getElementById('query').value || 'KMB';
   var content = '';
 
-  var BASE_URI = 'http://query.yahooapis.com/v1/yql';
+  var BASE_URI = 'http://query.yahooapis.com/v1/yql?';
 
   // function calling the opensocial makerequest method
   function runQuery(query, handler) {
