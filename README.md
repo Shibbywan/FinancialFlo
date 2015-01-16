@@ -1,7 +1,7 @@
 FinancialFlo
 ============
 
-API Reference: http://www.bloomberglabs.com/api/libraries/
+http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote
 
 The idea is to create a comprehensive investment application in Java. The program will initially be desktop based, although will require an internet connection to fetch new data. A user should be able to search by Company name or Company Code and obtain information such as Net Income, Total Revenue, Stock Price, and Total Assets. The application should include a management system for the user to edit that can be sorted etc.
 
