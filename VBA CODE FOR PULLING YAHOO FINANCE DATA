@@ -1,0 +1,34 @@
+Sub finance()
+'
+' finance Macro
+'
+
+'
+    ActiveWorkbook.Worksheets.Add
+    With ActiveSheet.QueryTables.Add(Connection:= _
+        "URL;https://ca.finance.yahoo.com/q/is?s=BRK-A&annual", Destination:=Range( _
+        "$A$1"))
+        .CommandType = 0
+        .Name = "is?s=KMB&annual_1"
+        .FieldNames = True
+        .RowNumbers = False
+        .FillAdjacentFormulas = False
+        .PreserveFormatting = True
+        .RefreshOnFileOpen = False
+        .BackgroundQuery = True
+        .RefreshStyle = xlInsertDeleteCells
+        .SavePassword = False
+        .SaveData = True
+        .AdjustColumnWidth = True
+        .RefreshPeriod = 0
+        .WebSelectionType = xlSpecifiedTables
+        .WebFormatting = xlWebFormattingNone
+        .WebTables = "9"
+        .WebPreFormattedTextToColumns = True
+        .WebConsecutiveDelimitersAsOne = True
+        .WebSingleBlockTextImport = False
+        .WebDisableDateRecognition = False
+        .WebDisableRedirections = False
+        .Refresh BackgroundQuery:=False
+    End With
+End Sub
