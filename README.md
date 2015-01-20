@@ -1,5 +1,14 @@
 FinancialFlo
 ============
+______________________________________________________________________________________________________________
+
+*HIGH PRIORITY* http://www.nasdaq.com/screening/company-list.aspx go here and create comprehensive text file
+containing stock symbol, then company name. Example:
+
+CNQ     CANADIAN NATURAL RESOURCES LTD
+KMB     KIMBERLY CLARK CORP
+...     ...
+______________________________________________________________________________________________________________
 
 http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote
 http://stackoverflow.com/questions/10040954/alternative-to-google-finance-api
