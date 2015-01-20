@@ -6,7 +6,9 @@ ________________________________________________________________________________
 containing stock symbol, then company name. Example:
 
 CNQ     CANADIAN NATURAL RESOURCES LTD
+
 KMB     KIMBERLY CLARK CORP
+
 ...     ...
 ______________________________________________________________________________________________________________
 
