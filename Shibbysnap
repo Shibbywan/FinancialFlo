@@ -12,9 +12,13 @@ Possible GUI:
 Reddit style upvote/downvote images
 or
 Interactive Mapping: more popular images are more enlarged, less popular/disliked images become smaller
-
+The longer the image stays, the smaller it becomes, popular images will be pushed to the top? Will need an algorithm/testing to
+see the best combination
 
 
 
 Extra Ideas: add controversial section, most commented on image, etc.,
 
+Monetization possibilities: display some ads as pictures in between other images.
+
+premium upgrade: allows videos (Or whole new seperate app for that)
