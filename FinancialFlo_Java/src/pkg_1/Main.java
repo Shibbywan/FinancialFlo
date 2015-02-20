@@ -5,12 +5,17 @@
  */
 package pkg_1;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+
 /**
  *
  * @author Kevin
  */
 public class Main {
-        public static void main(String[] args) {
-            Queries q = new Queries();
+        public static void main(String[] args) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
+            GetData g = new GetData();
         }
 }
