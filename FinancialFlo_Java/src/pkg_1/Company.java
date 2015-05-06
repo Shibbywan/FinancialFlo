@@ -136,4 +136,42 @@ public class Company {
     public String getRevenue() {
         return this.revenue;
     }
+    
+    public String getRevenuePerShare() {
+        return this.revenuePerShare;
+    }
+    
+    public String getQtrlyRevenueGrowth() {
+        return this.qtrlyRevenueGrowth;
+    }
+    
+    public String getGrossProfit() {
+        return this.grossProfit;
+    }
+    
+    public String getEBITDA() {
+        return this.ebitda;
+    }
+    
+    public String getnetIncomeAvlToCommon() {
+        return this.netIncomeAvlToCommon;
+    }
+    
+    public String getdilutedEPS() {
+        return this.dilutedEPS;
+    }
+    
+    public String getqtrlyEarningsGrowth() {
+        return this.qtrlyEarningsGrowth;
+    }
+    
+    public String gettotalCash() {
+        return this.totalCash;
+    }
+    
+    public String gettotalCashPerShare() {
+        return this.totalCashPerShare;
+    }
+    
+    public String get
 }
