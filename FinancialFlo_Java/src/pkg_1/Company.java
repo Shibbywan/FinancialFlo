@@ -197,5 +197,103 @@ public class Company {
         return this.leveredFreeCashFlow;
     }
     
-    public String get
+    public String getBeta() {
+        return this.beta;
+    }
+    
+    public String getP_52_WeekChange() {
+        return this.p_52_WeekChange;
+    }
+    
+    public String getSP50052_WeekChange() {
+        return this.SP50052_WeekChange;
+    }
+    
+    public String getP_52_WeekHigh() {
+        return this.p_52_WeekHigh;
+    }
+    
+    public String getP_52_WeekLow() {
+        return this.p_52_WeekLow;
+    }
+    
+    public String getP_50_DayMovingAverage() {
+        return this.p_50_DayMovingAverage;
+    }
+    
+    public String getP_200_DayMovingAverage() {
+        return this.p_200_DayMovingAverage;
+    }
+    
+    public String getAvgVol1() {
+        return this.avgVol1;
+    }
+    
+    public String getAvgVol2() {
+        return this.avgVol2;
+    }
+    
+    public String getSharesOutstanding() {
+        return this.sharesOutstanding;
+    }
+    
+    public String getShareFloat() {
+        return this.shareFloat;
+    }
+    
+    public String getPercentageHeldByInsiders() {
+        return this.percentageHeldByInsiders;
+    }
+    
+    public String getPercentageHeldByInstitutions() {
+        return this.percentageHeldByInstitutions;
+    }
+    
+    public String getShortRatio() {
+        return this.shortRatio;
+    }
+    
+    public String getShortPercentage() {
+        return this.shortPercentage;
+    }
+    
+    public String getForwardAnnualDividendRate() {
+        return this.forwardAnnualDividendRate;
+    }
+    
+    public String getForwardAnnualDividendYield() {
+        return this.forwardAnnualDividendYield;
+    }
+    
+    public String getTrailingAnnualDividendYieldp() {
+        return this.trailingAnnualDividendYieldp;
+    }
+    
+    public String getTrailingAnnualDividendYieldn() {
+        return this.trailingAnnualDividendYieldn;
+    }
+    
+    public String getP_5YearAverageDividendYield() {
+        return this.p_5YearAverageDividendYield;
+    }
+    
+    public String getPayoutRatio() {
+        return this.payoutRatio;
+    }
+    
+    public String getDividendDate() {
+        return this.dividendDate;
+    }
+    
+    public String getEx_DividendDate() {
+        return this.ex_DividendDate;
+    }
+    
+    public String getLastSplitFactor() {
+        return this.lastSplitFactor;
+    }
+    
+    public String getLastSplitDate() {
+        return this.lastSplitDate;
+    }
 }
