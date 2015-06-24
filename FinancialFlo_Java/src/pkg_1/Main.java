@@ -16,6 +16,6 @@ import org.xml.sax.SAXException;
  */
 public class Main {
         public static void main(String[] args) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
-            GetData g = new GetData();
+            GetData g = new GetData("KMB");
         }
 }

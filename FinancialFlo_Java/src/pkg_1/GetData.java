@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.TreeMap;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,13 +23,17 @@ import org.xml.sax.SAXException;
  * @author Kevin
  */
 public class GetData {
-    private final String s1 = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.keystats%20where%20symbol%20in%20(%22";
-    private final String s2 = "%22)&env=store://datatables.org/alltableswithkeys";
-    public GetData() throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
-        requestData("KMB");
+    private final String s1 = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.keystats%20where%20symbol%20in%20%28%22";
+    private Map <String, Company> companyMap;
+
+    private final String s2 = "%22%29&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env";
+    
+    public GetData(String s) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
+        Company c;
+        requestData("SNE");
     }
     
-    private void requestData(String name) throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
+    private Company requestData(String name) throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
         String marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
                 fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
                 dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
@@ -37,10 +43,12 @@ public class GetData {
                 payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate;
         
         URL url = new URL(s1 + name + s2);
+        companyMap = new TreeMap<>();
+        System.out.println("url is" + url.toString());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/xml");
-        
+        Company k = null;
         InputStream xml = connection.getInputStream();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -116,9 +124,16 @@ public class GetData {
                  System.out.println(avgVol1);
                  System.out.println(avgVol2);
                  System.out.println(marketCap);
+                 k = new Company(marketCap,  enterpriseValue,  trailingPE,  forwardPE,  pegRatio,  priceSales,  priceBook,  enterpriseValueRevenue, enterpriseValueEBITDA,
+                 fiscalYearEnds,  mostRecentQuarter,  profitMargin,   operatingMargin,  returnOnAssets,  returnOnEquity,  revenue,  revenuePerShare,  qtrlyRevenueGrowth,  grossProfit,  ebitda,  netIncomeAvlToCommon,
+                 dilutedEPS,  qtrlyEarningsGrowth,  totalCash,   totalCashPerShare,  totalDebt,  totalDebtEquity,  currentRatio,  bookValuePerShare,  operatingCashFlow,
+                 leveredFreeCashFlow,  beta,  p_52_WeekChange,  SP50052_WeekChange,  p_52_WeekHigh,  p_52_WeekLow,  p_50_DayMovingAverage,  p_200_DayMovingAverage,
+                  avgVol1,  avgVol2,  sharesOutstanding,  shareFloat,  percentageHeldByInsiders,  percentageHeldByInstitutions,  shortRatio,  shortPercentage,
+                 forwardAnnualDividendRate,  forwardAnnualDividendYield,  trailingAnnualDividendYieldp,  trailingAnnualDividendYieldn,  p_5YearAverageDividendYield, payoutRatio,  dividendDate,  ex_DividendDate,  lastSplitFactor,  lastSplitDate);
 
             }
         }
+        return k;
     }
     public static String getCharacterDataFromElement(Element e) {
         Node child = e.getFirstChild();
