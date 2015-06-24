@@ -41,8 +41,6 @@ public class GUI extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
-        jFrame1.setPreferredSize(new java.awt.Dimension(1920, 1080));
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Market Cap (intraday):", null, null, null, null, null, null, null, null},

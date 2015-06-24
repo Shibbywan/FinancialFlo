@@ -173,5 +173,29 @@ public class Company {
         return this.totalCashPerShare;
     }
     
+    public String getTotalDebt() {
+        return this.totalDebt;
+    }
+    
+    public String getTotalDebtEquity() {
+        return this.totalDebtEquity;
+    }
+    
+    public String getCurrentRatio() {
+        return this.currentRatio;
+    }
+    
+    public String getBookValuePerShare() {
+        return this.bookValuePerShare;
+    }
+    
+    public String getOperatingCashFlow() {
+        return this.operatingCashFlow;
+    }
+    
+    public String getLeveredFreeCashFlow() {
+        return this.leveredFreeCashFlow;
+    }
+    
     public String get
 }
