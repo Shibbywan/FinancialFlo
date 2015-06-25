@@ -18,4 +18,8 @@ public class Model {
     public Set <String> getMap() {
         return this.companyMap.keySet();
     }
+    
+    public void addToMap(String name, Company k) {
+        this.companyMap.put(name, k);
+    }
 }
