@@ -28,12 +28,8 @@ public class GetData {
 
     private final String s2 = "%22%29&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env";
     
-    public GetData(String s) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
-        Company c;
-        requestData("SNE");
-    }
     
-    private Company requestData(String name) throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
+    public Company requestData(String name) throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
         String marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
                 fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
                 dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
