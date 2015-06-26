@@ -30,11 +30,16 @@ public class Controller {
             }
         };
         this.gui.addSearchBarListener(new searchListener());
+        tm.addColumn("Symbol");
+        tm.addColumn("Company");
+        tm.addColumn("Market Price");
+        
     }
     
     public void getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
         if (this.model.getMap().contains(name)) {
             model.addToMap(name, this.getdata.requestData(name));
+            tm.addRow(rowData);
         } else {
             System.out.println("The Company does not exist\n");
         }
