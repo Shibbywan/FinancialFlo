@@ -42,10 +42,13 @@ public class GetHTMLData {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         Document doc = (Document) Jsoup.connect("https://finance.yahoo.com/q/ks?s=KMB").get();
         Elements ps = (Elements) doc.select("tbody");
-        for (Element p : ps) {
-            bw.write(p.toString());
-            bw.newLine();
-        }
-        System.out.println(Jsoup.parse(ps.toString()).text());
+        String[] parts = Jsoup.parse(ps.toString()).text().split("Valuation Measures");
+        String k = parts[1];
+        parts = k.split("See Key Statistics Help");
+        k = parts[0];
+        k = k.trim();
+        bw.write(k);
+        bw.close();
+        System.out.println(k);
     }
 }
