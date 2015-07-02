@@ -5,17 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.util.Scanner;
 import java.util.StringTokenizer;
-import org.xml.sax.Attributes;
-import org.xml.sax.helpers.DefaultHandler;
-import org.ccil.cowan.tagsoup.jaxp.SAXParserImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.xml.sax.SAXException;
 /**
@@ -34,21 +26,17 @@ public class GetHTMLData {
         int z = -1;
          
         File fout = new File("data.txt");
-        FileOutputStream fos = new FileOutputStream(fout);
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        Document doc = (Document) Jsoup.connect("https://finance.yahoo.com/q/ks?s=YHOO").get();
+        Document doc = (Document) Jsoup.connect("https://finance.yahoo.com/q/ks?s=SUN").get();
         Elements ps = (Elements) doc.select("tbody");
         String[] parts = Jsoup.parse(ps.toString()).text().split("Valuation Measures");
         String k = parts[1];
         parts = k.split("See Key Statistics Help");
         k = parts[0];
         k = k.trim();
-        bw.write(k);
-        bw.close();
         StringTokenizer st = new StringTokenizer(k);
         while (st.hasMoreTokens()) {
             t = st.nextToken(":");
-            if (z == 0) 
+            if (z == 0)
                 marketCap = t;
             if (z == 1)
                 enterpriseValue = t;
@@ -163,17 +151,15 @@ public class GetHTMLData {
             if (z == 56)
                 lastSplitFactor = t;
             if (z == 57) {
-                if (t.contains("/") == false) 
+                if (t.contains("/") == false) {
                     temp = t.split(" ")[0] + ":";
-                lastSplitFactor = lastSplitFactor.trim();
-                lastSplitFactor = temp + lastSplitFactor;
+                    lastSplitFactor = lastSplitFactor.trim();
+                    lastSplitFactor = temp + lastSplitFactor;
+                }
             }
             if (st.hasMoreElements() == false) {
                 lastSplitDate = t;
-            }
-            //System.out.println(t);
-
-            
+            }         
             z++;
         }
          System.out.println(lastSplitDate);
