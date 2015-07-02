@@ -16,13 +16,11 @@ import org.xml.sax.SAXException;
 public class Controller {
     private final Model model;
     private final GUI gui;
-    private final GetData getdata;
     private final DefaultTableModel tm;
     
-    public Controller(Model model, GUI gui, GetData getdata) {
+    public Controller(Model model, GUI gui) {
         this.model = model;
         this.gui = gui;
-        this.getdata = getdata;
         tm = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) { //makes the cells in the table uneditable
@@ -37,13 +35,11 @@ public class Controller {
     }
     
     public void getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
-        if (this.model.getMap().contains(name)) {
-            model.addToMap(name, this.getdata.requestData(name));
-            //tm.addRow(rowData);
-        } else {
-            System.out.println("The Company does not exist\n");
-        }
+        GetHTMLData k = new GetHTMLData();
+        Company c = k.getData(name);
+        
     }
+    
     
     private class searchListener implements ActionListener {
         

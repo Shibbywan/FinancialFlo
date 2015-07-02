@@ -1,10 +1,6 @@
 
 package pkg_1;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,18 +11,18 @@ import org.xml.sax.SAXException;
  * @author Kevin
  */
 public class GetHTMLData {
-    public void getData() throws SAXException, IOException {
-         String marketCap = null, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
-                fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
-                dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
-                leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
-                avgVol, avgVol1, avgVol2, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, shortRatio = null, shortPercentage = null, sharesShort = null,
-                forwardAnnualDividendRate = null, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
-                payoutRatio, dividendDate = null, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, t, temp = "";
+    public Company getData(String company) throws SAXException, IOException {
+         String marketCap = null, enterpriseValue = null, trailingPE = null, forwardPE = null, pegRatio = null, priceSales = null, priceBook = null, enterpriseValueRevenue = null, enterpriseValueEBITDA = null,
+                fiscalYearEnds = null, mostRecentQuarter = null, profitMargin = null, operatingMargin = null, returnOnAssets = null, returnOnEquity = null, revenue = null, revenuePerShare = null, qtrlyRevenueGrowth = null, grossProfit = null, ebitda = null, netIncomeAvlToCommon = null,
+                dilutedEPS = null, qtrlyEarningsGrowth = null, totalCash = null, totalCashPerShare = null, totalDebt = null, totalDebtEquity = null, currentRatio = null, bookValuePerShare = null, operatingCashFlow = null,
+                leveredFreeCashFlow = null, beta = null, p_52_WeekChange = null, SP50052_WeekChange = null, p_52_WeekHigh = null, p_52_WeekLow = null, p_50_DayMovingAverage = null, p_200_DayMovingAverage = null,
+                avgVol = null, avgVol1 = null, avgVol2 = null, sharesOutstanding = null, shareFloat = null, percentageHeldByInsiders = null, percentageHeldByInstitutions = null, shortRatio = null, shortPercentage = null, sharesShort = null,
+                forwardAnnualDividendRate = null, forwardAnnualDividendYield = null, trailingAnnualDividendYieldp = null, trailingAnnualDividendYieldn = null, p_5YearAverageDividendYield = null, 
+                payoutRatio = null, dividendDate = null, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, t, temp = "";
         int z = -1;
          
-        File fout = new File("data.txt");
-        Document doc = (Document) Jsoup.connect("https://finance.yahoo.com/q/ks?s=SUN").get();
+        String link = "https://finance.yahoo.com/q/ks?s=" + company;
+        Document doc = (Document) Jsoup.connect(link).get();
         Elements ps = (Elements) doc.select("tbody");
         String[] parts = Jsoup.parse(ps.toString()).text().split("Valuation Measures");
         String k = parts[1];
@@ -152,9 +148,9 @@ public class GetHTMLData {
                 lastSplitFactor = t.trim().split(" ")[0];
             if (z == 57) {
                 if (t.contains("/") == false) {
-                    temp = t.split(" ")[0] + ":";
+                    temp = t.split(" ")[0];
                     lastSplitFactor = lastSplitFactor.trim();
-                    lastSplitFactor = temp + lastSplitFactor;
+                    lastSplitFactor = lastSplitFactor + ":" + temp;
                 }
             }
             if (st.hasMoreElements() == false) {
@@ -162,6 +158,13 @@ public class GetHTMLData {
             }         
             z++;
         }
+        Company c = new Company(marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
+                fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
+                dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
+                leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
+                avgVol, avgVol1, avgVol2, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, shortRatio, shortPercentage,
+                forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
+                payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate);
          System.out.println("last split date is "+ lastSplitDate);
          System.out.println("short ratio is " + shortRatio);
          System.out.println("market cap is "+ marketCap);
@@ -170,6 +173,6 @@ public class GetHTMLData {
          System.out.println("dividend date is " + dividendDate);
          System.out.println("short percentage is "+ shortPercentage);
          System.out.println("forward annual dividend rate is " + forwardAnnualDividendRate);
-        //System.out.println(k);
+         return c;
     }
 }
