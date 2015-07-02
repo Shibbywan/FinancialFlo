@@ -22,7 +22,7 @@ public class GetHTMLData {
                 leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
                 avgVol, avgVol1, avgVol2, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, shortRatio = null, shortPercentage = null, sharesShort = null,
                 forwardAnnualDividendRate = null, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
-                payoutRatio, dividendDate, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, t, temp = "";
+                payoutRatio, dividendDate = null, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, t, temp = "";
         int z = -1;
          
         File fout = new File("data.txt");
@@ -37,119 +37,119 @@ public class GetHTMLData {
         while (st.hasMoreTokens()) {
             t = st.nextToken(":");
             if (z == 0)
-                marketCap = t;
+                marketCap = t.trim().split(" ")[0];
             if (z == 1)
-                enterpriseValue = t;
+                enterpriseValue = t.trim().split(" ")[0];
             if (z == 2)
-                trailingPE = t;
+                trailingPE = t.trim().split(" ")[0];
             if (z == 3)
-                forwardPE = t;
+                forwardPE = t.trim().split(" ")[0];
             if (z == 4)
-                pegRatio = t;
+                pegRatio = t.trim().split(" ")[0];
             if (z == 5)
-                priceSales = t;
+                priceSales = t.trim().split(" ")[0];
             if (z == 6)
-                priceBook = t;
+                priceBook = t.trim().split(" ")[0];
             if (z == 7)
-                enterpriseValueRevenue = t;
+                enterpriseValueRevenue = t.trim().split(" ")[0];
             if (z == 8)
-                enterpriseValueEBITDA = t;
+                enterpriseValueEBITDA = t.trim().split(" ")[0];
             if (z == 9)
-                fiscalYearEnds = t;
+                fiscalYearEnds = t.trim().split(" ")[0];
             if (z == 10)
-                mostRecentQuarter = t;
+                mostRecentQuarter = t.trim().split(" ")[0];
             if (z == 11)
-                profitMargin = t;
+                profitMargin = t.trim().split(" ")[0];
             if (z == 12)
-                operatingMargin = t;
+                operatingMargin = t.trim().split(" ")[0];
             if (z == 13)
-                returnOnAssets = t;
+                returnOnAssets = t.trim().split(" ")[0];
             if (z == 14)
-                returnOnEquity = t;
+                returnOnEquity = t.trim().split(" ")[0];
             if (z == 15)
-                revenue = t;
+                revenue = t.trim().split(" ")[0];
             if (z == 16)
-                revenuePerShare = t;
+                revenuePerShare = t.trim().split(" ")[0];
             if (z == 17)
-                qtrlyRevenueGrowth = t;
+                qtrlyRevenueGrowth = t.trim().split(" ")[0];
             if (z == 18)
-                grossProfit = t;
+                grossProfit = t.trim().split(" ")[0];
             if (z == 19)
-                ebitda = t;
+                ebitda = t.trim().split(" ")[0];
             if (z == 20)
-                netIncomeAvlToCommon = t;
+                netIncomeAvlToCommon = t.trim().split(" ")[0];
             if (z == 21)
-                dilutedEPS = t;
+                dilutedEPS = t.trim().split(" ")[0];
             if (z == 22)
-                qtrlyEarningsGrowth = t;
+                qtrlyEarningsGrowth = t.trim().split(" ")[0];
             if (z == 23)
-                totalCash = t;
+                totalCash = t.trim().split(" ")[0];
             if (z == 24)
-                totalCashPerShare = t;
+                totalCashPerShare = t.trim().split(" ")[0];
             if (z == 25)
-                totalDebt = t;
+                totalDebt = t.trim().split(" ")[0];
             if (z == 26)
-                totalDebtEquity = t;
+                totalDebtEquity = t.trim().split(" ")[0];
             if (z == 27)
-                currentRatio = t;
+                currentRatio = t.trim().split(" ")[0];
             if (z == 28)
-                bookValuePerShare = t;
+                bookValuePerShare = t.trim().split(" ")[0];
             if (z == 29)
-                operatingCashFlow = t;
+                operatingCashFlow = t.trim().split(" ")[0];
             if (z == 30)
-                leveredFreeCashFlow = t;
+                leveredFreeCashFlow = t.trim().split(" ")[0];
             if (z == 31)
-                beta = t;
+                beta = t.trim().split(" ")[0];
             if (z == 32)
-                p_52_WeekChange = t;
+                p_52_WeekChange = t.trim().split(" ")[0];
             if (z == 33)
-                SP50052_WeekChange = t;
+                SP50052_WeekChange = t.trim().split(" ")[0];
             if (z == 34)
-                p_52_WeekHigh = t;
+                p_52_WeekHigh = t.trim().split(" ")[0];
             if (z == 35)
-                p_52_WeekLow = t;
+                p_52_WeekLow = t.trim().split(" ")[0];
             if (z == 36)
-                p_50_DayMovingAverage = t;
+                p_50_DayMovingAverage = t.trim().split(" ")[0];
             if (z == 37)
-                p_200_DayMovingAverage = t;
+                p_200_DayMovingAverage = t.trim().split(" ")[0];
             if (z == 38)
-                avgVol = t;
+                avgVol = t.trim().split(" ")[0];
             if (z == 39)
-                avgVol1 = t;
+                avgVol1 = t.trim().split(" ")[0];
             if (z == 40)
-                avgVol2 = t;
+                avgVol2 = t.trim().split(" ")[0];
             if (z == 41)
-                sharesOutstanding = t;
+                sharesOutstanding = t.trim().split(" ")[0];
             if (z == 42)
-                shareFloat = t;
+                shareFloat = t.trim().split(" ")[0];
             if (z == 43)
-                percentageHeldByInsiders = t;
+                percentageHeldByInsiders = t.trim().split(" ")[0];
             if (z == 44)
-                percentageHeldByInstitutions = t;
+                percentageHeldByInstitutions = t.trim().split(" ")[0];
             if (z == 45)
-                shortRatio = t;
+                shortRatio = t.trim().split(" ")[0];
             if (z == 46)
-                shortPercentage = t;
+                shortPercentage = t.trim().split(" ")[0];
             if (z == 47)
-                sharesShort = t;
+                sharesShort = t.trim().split(" ")[0];
             if (z == 48)
-                forwardAnnualDividendRate = t;
+                forwardAnnualDividendRate = t.trim().split(" ")[0];
             if (z == 49)
-                forwardAnnualDividendYield = t;
+                forwardAnnualDividendYield = t.trim().split(" ")[0];
             if (z == 50)
-                trailingAnnualDividendYieldp = t;
+                trailingAnnualDividendYieldp = t.trim().split(" ")[0];
             if (z == 51)
-                trailingAnnualDividendYieldn = t;
+                trailingAnnualDividendYieldn = t.trim().split(" ")[0];
             if (z == 52)
-                p_5YearAverageDividendYield = t;
+                p_5YearAverageDividendYield = t.trim().split(" ")[0];
             if (z == 53)
-                payoutRatio = t;
+                payoutRatio = t.trim().split(" ")[0];
             if (z == 54)
-                dividendDate = t;
+                dividendDate = t.trim().split("Ex")[0];
             if (z == 55)
-                ex_DividendDate = t;
+                ex_DividendDate = t.trim().split("Last")[0];
             if (z == 56)
-                lastSplitFactor = t;
+                lastSplitFactor = t.trim().split(" ")[0];
             if (z == 57) {
                 if (t.contains("/") == false) {
                     temp = t.split(" ")[0] + ":";
@@ -162,13 +162,14 @@ public class GetHTMLData {
             }         
             z++;
         }
-         System.out.println(lastSplitDate);
-         System.out.println(shortRatio);
-         System.out.println(marketCap);
-         System.out.println(lastSplitFactor);
-         System.out.println(ex_DividendDate);
-         System.out.println(shortPercentage);
-         System.out.println(forwardAnnualDividendRate);
+         System.out.println("last split date is "+ lastSplitDate);
+         System.out.println("short ratio is " + shortRatio);
+         System.out.println("market cap is "+ marketCap);
+         System.out.println("last split factor is " +lastSplitFactor);
+         System.out.println("ex_dividend date is " + ex_DividendDate);
+         System.out.println("dividend date is " + dividendDate);
+         System.out.println("short percentage is "+ shortPercentage);
+         System.out.println("forward annual dividend rate is " + forwardAnnualDividendRate);
         //System.out.println(k);
     }
 }
