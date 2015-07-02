@@ -28,15 +28,17 @@ public class Controller {
             }
         };
         this.gui.addSearchBarListener(new searchListener());
+        gui.setTableModel(tm);
         tm.addColumn("Symbol");
         tm.addColumn("Company");
         tm.addColumn("Market Price");
         
     }
     
-    public void getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
+    public Company getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
         GetHTMLData k = new GetHTMLData();
         Company c = k.getData(name);
+        return c;
         
     }
     
@@ -47,7 +49,8 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             String s = gui.getSearchText();
             try {
-                getCompany(s);
+                Company c = getCompany(s);
+                tm.addRow(new Object[]{c.getSymbol(), " ", " "});
             } catch (IOException | ParserConfigurationException | SAXException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
