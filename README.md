@@ -2,16 +2,7 @@ FinancialFlo
 ============
 ______________________________________________________________________________________________________________
 
-*HIGH PRIORITY* http://www.nasdaq.com/screening/company-list.aspx go here and create comprehensive text file
-containing stock symbol, then company name. Example:
-
-CNQ,     CANADIAN NATURAL RESOURCES LTD
-
-KMB,     KIMBERLY CLARK CORP
-
-... ,    ...
-
-note: the comma is very important
+http://www.nasdaq.com/screening/company-list.aspx
 ______________________________________________________________________________________________________________
 
 http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote
