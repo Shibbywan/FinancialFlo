@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
  *
  * @author Kevin
  */
+/*
 public class GetData {
     private final String s1 = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.keystats%20where%20symbol%20in%20%28%22";
     private Map <String, Company> companyMap;
@@ -140,3 +141,4 @@ public class GetData {
         return "";
     }
 }
+*/

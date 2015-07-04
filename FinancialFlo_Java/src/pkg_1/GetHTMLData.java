@@ -164,14 +164,7 @@ public class GetHTMLData {
                 leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
                 avgVol, avgVol1, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, sharesShort1, shortRatio, shortPercentage,sharesShort2,
                 forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
-                payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate);
-         System.out.println("pegRatio is " + pegRatio);
-         System.out.println("priceSales is " + priceSales);
-         System.out.println("AvgVol is " + avgVol );
-         System.out.println("AvgVol1 is " + avgVol1);
-         System.out.println("sharesShort1 is " + sharesShort1);
-         System.out.println("SharesShort2 is " + sharesShort2);
-         
+                payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate);        
          return c;
     }
 }

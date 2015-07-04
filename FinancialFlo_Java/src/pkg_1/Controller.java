@@ -1,6 +1,7 @@
 
 package pkg_1;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -16,8 +17,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -48,6 +51,7 @@ public class Controller {
     public Controller(Model model, GUI gui) {
         this.model = model;
         this.gui = gui;
+        gui.hideLoad();
         tm = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) { //makes the cells in the table uneditable
@@ -175,6 +179,8 @@ public class Controller {
         companyLastSplitDate.add("Last Split Date");
         this.gui.addSearchBarListener(new searchListener());
         this.gui.addExcelButtonListener(new excelListener());
+        this.gui.addClearButtonListener(new clearListener());
+        this.gui.addDialogOKListener(new dialogListener());
         gui.setTableModel(tm);
         tm.addColumn("Symbol");
         tm.addColumn("Company");
@@ -191,17 +197,51 @@ public class Controller {
     }
     
     
-    private class searchListener implements ActionListener {
+    private class searchListener extends SwingWorker<String, Object> implements ActionListener {
         
         @Override
         public void actionPerformed(ActionEvent e) {
+                gui.showLoad();
+                execute();
+        }
+
+        @Override
+        protected String doInBackground() throws Exception {
+            System.out.println("started");
             String s = gui.getSearchText();
             try {
                 Company c = getCompany(s);
                 tm.addRow(new Object[]{c.getSymbol(), " ", " "});
             } catch (IOException | ParserConfigurationException | SAXException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                gui.showDialog();
+                gui.setDialogText("Connection Interrupted");
             }
+            System.out.println("yeah");
+            return "ok";
+        }
+        @Override
+        protected void done() {
+            System.out.println("done");
+            gui.hideLoad();
+        }
+    }
+    
+    private class clearListener implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            companies.clear();
+            companynames.clear();
+            tm.setRowCount(0);
+            companynames.add("Symbol");
+        }
+    }
+    
+    private class dialogListener implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gui.hideDialog();
         }
     }
     
@@ -332,7 +372,6 @@ public class Controller {
             data.put("v", companyLastSplitFactor.toArray());
             data.put("w", companyLastSplitDate.toArray());
             Set<String> keyset = data.keySet();
-            System.out.println(data.keySet().toString());       
             int rownum = 0;
             for (String key : keyset) {
                 HSSFRow row = sheet.createRow(rownum++);
@@ -352,12 +391,16 @@ public class Controller {
                 }
             }
             try {
-                try (FileOutputStream out = new FileOutputStream(new File("new.xls"))) {
+                try (FileOutputStream out = new FileOutputStream(new File("D:\\new.xls"))) {
                     workbook.write(out);
                 }
-                System.out.println("Excel written successfully..");
+                try {
+            Desktop.getDesktop().open(new File("D:\\new.xls"));
+            } catch (IOException k) {
+            }
+
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                gui.showDialog();
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
