@@ -1,0 +1,15 @@
+FinancialFlo v0.1-alpha Bug Report_QA
+
+Improvements to be made
+1. Add Autocomplete and autocorrect, e.g. if typing kimberl -> autofill to Kimberly-Clark
+2. Formatting- Bold company stock symbols, adding borders to cells
+3. Highlight (e.g. green for highest) best statistics, e.g. PG has higher Market cap than KMB.
+4. Remove requirement of excel, compact program into one package
+5. When highlighting over each category (e.g. Beta), provide brief description/definition
+
+
+Bugs
+1. Program does nothing when a non-existent symbol is inputted
+2. Excel spreadsheet output in wrong order, see http://imgur.com/1DXGRnS. We want Symbol in top row
+3. Excel spreadsheet output is missing Company name e.g. for KMB, we want to show Kimberly Clark
+4. All stock symbols should be capitalized
