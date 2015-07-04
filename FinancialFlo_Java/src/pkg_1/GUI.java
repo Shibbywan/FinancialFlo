@@ -256,6 +256,7 @@ public class GUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImages(null);
         setResizable(false);
 
         searchBar.setFont(new java.awt.Font("Tahoma", 2, 16)); // NOI18N
