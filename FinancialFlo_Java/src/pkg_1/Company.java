@@ -5,7 +5,7 @@ public class Company {
                 fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
                 dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
                 leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
-                avgVol1, avgVol2, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, shortRatio, shortPercentage, sharesShort,
+                avgVol1, avgVol2, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions,sharesShort1, shortRatio, shortPercentage, sharesShort2,
                 forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
                 payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate;
     
@@ -13,7 +13,7 @@ public class Company {
                 String fiscalYearEnds, String mostRecentQuarter, String profitMargin,  String operatingMargin, String returnOnAssets, String returnOnEquity, String revenue, String revenuePerShare, String qtrlyRevenueGrowth, String grossProfit, String ebitda, String netIncomeAvlToCommon,
                 String dilutedEPS, String qtrlyEarningsGrowth, String totalCash,  String totalCashPerShare, String totalDebt, String totalDebtEquity, String currentRatio, String bookValuePerShare, String operatingCashFlow,
                 String leveredFreeCashFlow, String beta, String p_52_WeekChange, String SP50052_WeekChange, String p_52_WeekHigh, String p_52_WeekLow, String p_50_DayMovingAverage, String p_200_DayMovingAverage,
-                 String avgVol1, String avgVol2, String sharesOutstanding, String shareFloat, String percentageHeldByInsiders, String percentageHeldByInstitutions, String shortRatio, String shortPercentage, String sharesShort,
+                 String avgVol1, String avgVol2, String sharesOutstanding, String shareFloat, String percentageHeldByInsiders, String percentageHeldByInstitutions, String sharesShort1, String shortRatio, String shortPercentage, String sharesShort2,
                 String forwardAnnualDividendRate, String forwardAnnualDividendYield, String trailingAnnualDividendYieldp, String trailingAnnualDividendYieldn, String p_5YearAverageDividendYield, 
                 String payoutRatio, String dividendDate, String ex_DividendDate, String lastSplitFactor, String lastSplitDate) {
         this.symbol = symbol;
@@ -61,9 +61,10 @@ public class Company {
         this.shareFloat = shareFloat;
         this.percentageHeldByInsiders = percentageHeldByInsiders;
         this.percentageHeldByInstitutions = percentageHeldByInstitutions;
+        this.sharesShort1 = sharesShort1;
         this.shortRatio = shortRatio;
         this.shortPercentage = shortPercentage;
-        this.sharesShort = sharesShort;
+        this.sharesShort2 = sharesShort2;
         this.forwardAnnualDividendRate = forwardAnnualDividendRate;
         this.forwardAnnualDividendYield = forwardAnnualDividendYield;
         this.trailingAnnualDividendYieldn = trailingAnnualDividendYieldn;
@@ -99,7 +100,7 @@ public class Company {
     }
     
     public String getPriceSales() {
-        return this.pegRatio;
+        return this.priceSales;
     }
     
     public String getPriceBook() {
@@ -254,6 +255,10 @@ public class Company {
         return this.percentageHeldByInstitutions;
     }
     
+    public String getSharesShort1() {
+        return this.sharesShort1;
+    }
+    
     public String getShortRatio() {
         return this.shortRatio;
     }
@@ -262,8 +267,8 @@ public class Company {
         return this.shortPercentage;
     }
     
-    public String getSharesShort() {
-        return this.sharesShort;
+    public String getSharesShort2() {
+        return this.sharesShort2;
     }
     
     public String getForwardAnnualDividendRate() {

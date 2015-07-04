@@ -16,7 +16,7 @@ public class GetHTMLData {
                 fiscalYearEnds = null, mostRecentQuarter = null, profitMargin = null, operatingMargin = null, returnOnAssets = null, returnOnEquity = null, revenue = null, revenuePerShare = null, qtrlyRevenueGrowth = null, grossProfit = null, ebitda = null, netIncomeAvlToCommon = null,
                 dilutedEPS = null, qtrlyEarningsGrowth = null, totalCash = null, totalCashPerShare = null, totalDebt = null, totalDebtEquity = null, currentRatio = null, bookValuePerShare = null, operatingCashFlow = null,
                 leveredFreeCashFlow = null, beta = null, p_52_WeekChange = null, SP50052_WeekChange = null, p_52_WeekHigh = null, p_52_WeekLow = null, p_50_DayMovingAverage = null, p_200_DayMovingAverage = null,
-                avgVol = null, avgVol1 = null, avgVol2 = null, sharesOutstanding = null, shareFloat = null, percentageHeldByInsiders = null, percentageHeldByInstitutions = null, shortRatio = null, shortPercentage = null, sharesShort = null,
+                avgVol = null, avgVol1 = null, sharesOutstanding = null, shareFloat = null, percentageHeldByInsiders = null, percentageHeldByInstitutions = null, shortRatio = null, shortPercentage = null, sharesShort1 = null, sharesShort2 = null,
                 forwardAnnualDividendRate = null, forwardAnnualDividendYield = null, trailingAnnualDividendYieldp = null, trailingAnnualDividendYieldn = null, p_5YearAverageDividendYield = null, 
                 payoutRatio = null, dividendDate = null, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, t, temp = "";
         int z = -1;
@@ -113,21 +113,21 @@ public class GetHTMLData {
             if (z == 39)
                 avgVol1 = t.trim().split(" ")[0];
             if (z == 40)
-                avgVol2 = t.trim().split(" ")[0];
-            if (z == 41)
                 sharesOutstanding = t.trim().split(" ")[0];
-            if (z == 42)
+            if (z == 41)
                 shareFloat = t.trim().split(" ")[0];
-            if (z == 43)
+            if (z == 42)
                 percentageHeldByInsiders = t.trim().split(" ")[0];
-            if (z == 44)
+            if (z == 43)
                 percentageHeldByInstitutions = t.trim().split(" ")[0];
+            if (z == 44)
+                sharesShort1 = t.trim().split(" ")[0];
             if (z == 45)
                 shortRatio = t.trim().split(" ")[0];
             if (z == 46)
                 shortPercentage = t.trim().split(" ")[0];
             if (z == 47)
-                sharesShort = t.trim().split(" ")[0];
+                sharesShort2 = t.trim().split(" ")[0];
             if (z == 48)
                 forwardAnnualDividendRate = t.trim().split(" ")[0];
             if (z == 49)
@@ -162,17 +162,16 @@ public class GetHTMLData {
                 fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
                 dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
                 leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
-                avgVol, avgVol1, avgVol2, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, shortRatio, shortPercentage,
+                avgVol, avgVol1, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, sharesShort1, shortRatio, shortPercentage,sharesShort2,
                 forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
                 payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate);
-         System.out.println("last split date is "+ lastSplitDate);
-         System.out.println("short ratio is " + shortRatio);
-         System.out.println("market cap is "+ marketCap);
-         System.out.println("last split factor is " +lastSplitFactor);
-         System.out.println("ex_dividend date is " + ex_DividendDate);
-         System.out.println("dividend date is " + dividendDate);
-         System.out.println("short percentage is "+ shortPercentage);
-         System.out.println("forward annual dividend rate is " + forwardAnnualDividendRate);
+         System.out.println("pegRatio is " + pegRatio);
+         System.out.println("priceSales is " + priceSales);
+         System.out.println("AvgVol is " + avgVol );
+         System.out.println("AvgVol1 is " + avgVol1);
+         System.out.println("sharesShort1 is " + sharesShort1);
+         System.out.println("SharesShort2 is " + sharesShort2);
+         
          return c;
     }
 }
