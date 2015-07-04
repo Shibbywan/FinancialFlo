@@ -177,7 +177,8 @@ public class Controller {
         companyEx_DividendDate.add("Ex-Dividend Date");
         companyLastSplitFactor.add("Last Split Factor (new per old)");
         companyLastSplitDate.add("Last Split Date");
-        this.gui.addSearchBarListener(new searchListener());
+        searchListener x = new searchListener();
+        this.gui.addSearchBarListener(x);
         this.gui.addExcelButtonListener(new excelListener());
         this.gui.addClearButtonListener(new clearListener());
         this.gui.addDialogOKListener(new dialogListener());
@@ -195,35 +196,28 @@ public class Controller {
         companynames.add(name);
         return c;
     }
+
+
     
     
-    private class searchListener extends SwingWorker<String, Object> implements ActionListener {
+    private class searchListener implements ActionListener  {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-                gui.showLoad();
-                execute();
-        }
-
-        @Override
-        protected String doInBackground() throws Exception {
-            System.out.println("started");
             String s = gui.getSearchText();
+            Company c = null;
             try {
-                Company c = getCompany(s);
-                tm.addRow(new Object[]{c.getSymbol(), " ", " "});
+                c = getCompany(s);
             } catch (IOException | ParserConfigurationException | SAXException ex) {
                 gui.showDialog();
                 gui.setDialogText("Connection Interrupted");
             }
-            System.out.println("yeah");
-            return "ok";
-        }
-        @Override
-        protected void done() {
-            System.out.println("done");
+            tm.addRow(new Object[]{c.getSymbol(), " ", " "});
             gui.hideLoad();
         }
+
+
+
     }
     
     private class clearListener implements ActionListener {
