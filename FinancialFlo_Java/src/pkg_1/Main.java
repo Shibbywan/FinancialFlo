@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -23,7 +24,17 @@ public class Main {
         @Override
         public void run() {
             TreeMap<String, Company> companyMap = new TreeMap();
-            Model model = new Model(companyMap);
+            Model model = null;
+            try {
+                model = new Model(companyMap);
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
             GUI gui = new GUI();
             Controller controller = new Controller(model,gui);
             gui.setVisible(true);

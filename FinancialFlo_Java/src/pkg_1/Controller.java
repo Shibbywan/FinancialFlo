@@ -1,4 +1,3 @@
-
 package pkg_1;
 
 import java.awt.Desktop;
@@ -10,14 +9,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingWorker;
@@ -25,17 +21,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
-
 
 public class Controller {
+
     private final Model model;
     private final GUI gui;
+    private int counter = 0;
     private final DefaultTableModel tm;
     private final List<Company> companies;
     private final List<String> companynames, companyMarketCaps, companyEnterpriseValues, companyTrailingPE, companyForwardPE, companyPEGRatio, companyPriceSales, companyPriceBook,
@@ -47,8 +41,10 @@ public class Controller {
             companyPercentageHeldByInstitutions, companySharesShort1, companyShortRatio, companyShortPercentage, companySharesShort2, companyForwardAnnualDividendRate, companyForwardAnnualDividendYield,
             companyTrailingAnnualDividendYieldp, companyTrailingAnnualDividendYieldn, companyP_5YearAverageDividendYield, companyPayoutRatio, companyDividendDate, companyEx_DividendDate, companyLastSplitFactor,
             companyLastSplitDate;
-    
-    public Controller(Model model, GUI gui) {
+    private List<String> keywords;
+    private SwingWorker worker;
+
+    public Controller(final Model model, final GUI gui) {
         this.model = model;
         this.gui = gui;
         gui.hideLoad();
@@ -183,12 +179,11 @@ public class Controller {
         this.gui.addClearButtonListener(new clearListener());
         this.gui.addDialogOKListener(new dialogListener());
         gui.setTableModel(tm);
+        keywords = new ArrayList<>();
         tm.addColumn("Symbol");
         tm.addColumn("Company");
-        tm.addColumn("Market Price");
-        
     }
-    
+
     public Company getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
         GetHTMLData k = new GetHTMLData();
         Company c = k.getData(name);
@@ -196,32 +191,51 @@ public class Controller {
         companynames.add(name);
         return c;
     }
+    public SwingWorker makeWorker() {
+        worker = new SwingWorker<String, Void>() {
 
+            @Override
+            protected String doInBackground() throws Exception {
+                while (!isCancelled()) {
+                    gui.disableSearch();
+                    String s = gui.getSearchText().toUpperCase();
+                    if ((s.length() != 0) == true && (model.getSymbols().contains(s.toUpperCase())) == true) {
+                        Company c = null;
+                        try {
+                            c = getCompany(s);
+                        } catch (IOException | ParserConfigurationException | SAXException ex) {
+                            gui.showDialog();
+                            gui.setDialogText("Connection Interrupted");
+                        }
+                        tm.addRow(new Object[]{c.getSymbol(), model.getCompanyMap().get(c.getSymbol())});
+                        gui.getSearchBar().setText("");
+                    } else {
+                        gui.showDialog();
+                        gui.setDialogText("Invalid Entry");
+                    }
+                    gui.enableSearch();
+                    cancel(true);
+                }
+                gui.hideLoad();
+                return null;
+            }
+        };
+        return worker;
+    }
+    private class searchListener implements ActionListener {
 
-    
-    
-    private class searchListener implements ActionListener  {
-        
         @Override
         public void actionPerformed(ActionEvent e) {
-            String s = gui.getSearchText();
-            Company c = null;
-            try {
-                c = getCompany(s);
-            } catch (IOException | ParserConfigurationException | SAXException ex) {
-                gui.showDialog();
-                gui.setDialogText("Connection Interrupted");
-            }
-            tm.addRow(new Object[]{c.getSymbol(), " ", " "});
-            gui.hideLoad();
+            worker = makeWorker();
+            gui.showLoad();
+            worker.execute();
+            
         }
 
-
-
     }
-    
+
     private class clearListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             companies.clear();
@@ -230,23 +244,23 @@ public class Controller {
             companynames.add("Symbol");
         }
     }
-    
+
     private class dialogListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             gui.hideDialog();
         }
     }
-    
+
     private class excelListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("Sample sheet");
-            Map<String, Object[]> data = new HashMap<>();
-            for (Company j: companies) {
+            Map<Integer, Object[]> data = new HashMap<>();
+            for (Company j : companies) {
                 companyMarketCaps.add(j.getMarketCap());
                 companyEnterpriseValues.add(j.getEnterpriseValue());
                 companyTrailingPE.add(j.getTrailingPE());
@@ -306,68 +320,68 @@ public class Controller {
                 companyLastSplitFactor.add(j.getLastSplitFactor());
                 companyLastSplitDate.add(j.getLastSplitDate());
             }
-            data.put("0", companynames.toArray());
-            data.put("1", companyMarketCaps.toArray());
-            data.put("2", companyEnterpriseValues.toArray());
-            data.put("3", companyTrailingPE.toArray());
-            data.put("4", companyForwardPE.toArray());
-            data.put("5", companyPEGRatio.toArray());
-            data.put("6", companyPriceSales.toArray());
-            data.put("7", companyPriceBook.toArray());
-            data.put("8", companyEnterpriseValueRevenue.toArray());
-            data.put("9", companyEnterpriseValueEBITDA.toArray());
-            data.put("A", companyFiscalYearEnds.toArray());
-            data.put("B", companyMostRecentQuarter.toArray());
-            data.put("C", companyProfitMargin.toArray());
-            data.put("D", companyOperatingMargin.toArray());
-            data.put("E", companyReturnOnAssets.toArray());
-            data.put("F", companyReturnOnEquity.toArray());
-            data.put("G", companyRevenue.toArray());
-            data.put("H", companyRevenuePerShare.toArray());
-            data.put("I", companyQtrlyRevenueGrowth.toArray());
-            data.put("J", companyGrossProfit.toArray());
-            data.put("K", companyEBITDA.toArray());
-            data.put("L", companyNetIncomeAvlToCommon.toArray());
-            data.put("M", companyDilutedEPS.toArray());
-            data.put("N", companyQtrlyEarningsGrowth.toArray());
-            data.put("O", companyTotalCash.toArray());
-            data.put("P", companyTotalCashPerShare.toArray());
-            data.put("Q", companyTotalDebt.toArray());
-            data.put("R", companyTotalDebtEquity.toArray());
-            data.put("S", companyCurrentRatio.toArray());
-            data.put("T", companyBookValuePerShare.toArray());
-            data.put("U", companyOperatingCashFlow.toArray());
-            data.put("V", companyLeveredFreeCashFlow.toArray());
-            data.put("W", companyBeta.toArray());
-            data.put("X", companyP_52_WeekChange.toArray());
-            data.put("Y", companySP50052_WeekChange.toArray());
-            data.put("Z", companyP_52_WeekHigh.toArray());
-            data.put("a", companyP_52_WeekLow.toArray());
-            data.put("b", companyP_50_DayMovingAverage.toArray());
-            data.put("c", companyP_200_DayMovingAverage.toArray());
-            data.put("d", companyAvgVol.toArray());
-            data.put("e", companyAvgVol1.toArray());
-            data.put("f", companySharesOutstanding.toArray());
-            data.put("g", companyShareFloat.toArray());
-            data.put("h", companyPercentageHeldByInsiders.toArray());
-            data.put("i", companyPercentageHeldByInstitutions.toArray());
-            data.put("j", companySharesShort1.toArray());
-            data.put("k", companyShortRatio.toArray());
-            data.put("l", companyShortPercentage.toArray());
-            data.put("m", companySharesShort2.toArray());
-            data.put("n", companyForwardAnnualDividendRate.toArray());
-            data.put("o", companyForwardAnnualDividendYield.toArray());
-            data.put("p", companyTrailingAnnualDividendYieldp.toArray());
-            data.put("q", companyTrailingAnnualDividendYieldn.toArray());
-            data.put("r", companyP_5YearAverageDividendYield.toArray());
-            data.put("s", companyPayoutRatio.toArray());
-            data.put("t", companyDividendDate.toArray());
-            data.put("u", companyEx_DividendDate.toArray());
-            data.put("v", companyLastSplitFactor.toArray());
-            data.put("w", companyLastSplitDate.toArray());
-            Set<String> keyset = data.keySet();
+            data.put(1, companynames.toArray());
+            data.put(2, companyMarketCaps.toArray());
+            data.put(3, companyEnterpriseValues.toArray());
+            data.put(4, companyTrailingPE.toArray());
+            data.put(5, companyForwardPE.toArray());
+            data.put(6, companyPEGRatio.toArray());
+            data.put(7, companyPriceSales.toArray());
+            data.put(8, companyPriceBook.toArray());
+            data.put(9, companyEnterpriseValueRevenue.toArray());
+            data.put(10, companyEnterpriseValueEBITDA.toArray());
+            data.put(11, companyFiscalYearEnds.toArray());
+            data.put(12, companyMostRecentQuarter.toArray());
+            data.put(13, companyProfitMargin.toArray());
+            data.put(14, companyOperatingMargin.toArray());
+            data.put(15, companyReturnOnAssets.toArray());
+            data.put(16, companyReturnOnEquity.toArray());
+            data.put(17, companyRevenue.toArray());
+            data.put(18, companyRevenuePerShare.toArray());
+            data.put(19, companyQtrlyRevenueGrowth.toArray());
+            data.put(20, companyGrossProfit.toArray());
+            data.put(21, companyEBITDA.toArray());
+            data.put(22, companyNetIncomeAvlToCommon.toArray());
+            data.put(23, companyDilutedEPS.toArray());
+            data.put(24, companyQtrlyEarningsGrowth.toArray());
+            data.put(25, companyTotalCash.toArray());
+            data.put(26, companyTotalCashPerShare.toArray());
+            data.put(27, companyTotalDebt.toArray());
+            data.put(28, companyTotalDebtEquity.toArray());
+            data.put(29, companyCurrentRatio.toArray());
+            data.put(30, companyBookValuePerShare.toArray());
+            data.put(31, companyOperatingCashFlow.toArray());
+            data.put(32, companyLeveredFreeCashFlow.toArray());
+            data.put(33, companyBeta.toArray());
+            data.put(34, companyP_52_WeekChange.toArray());
+            data.put(35, companySP50052_WeekChange.toArray());
+            data.put(36, companyP_52_WeekHigh.toArray());
+            data.put(37, companyP_52_WeekLow.toArray());
+            data.put(38, companyP_50_DayMovingAverage.toArray());
+            data.put(39, companyP_200_DayMovingAverage.toArray());
+            data.put(40, companyAvgVol.toArray());
+            data.put(41, companyAvgVol1.toArray());
+            data.put(42, companySharesOutstanding.toArray());
+            data.put(43, companyShareFloat.toArray());
+            data.put(44, companyPercentageHeldByInsiders.toArray());
+            data.put(45, companyPercentageHeldByInstitutions.toArray());
+            data.put(46, companySharesShort1.toArray());
+            data.put(47, companyShortRatio.toArray());
+            data.put(48, companyShortPercentage.toArray());
+            data.put(49, companySharesShort2.toArray());
+            data.put(50, companyForwardAnnualDividendRate.toArray());
+            data.put(51, companyForwardAnnualDividendYield.toArray());
+            data.put(52, companyTrailingAnnualDividendYieldp.toArray());
+            data.put(53, companyTrailingAnnualDividendYieldn.toArray());
+            data.put(54, companyP_5YearAverageDividendYield.toArray());
+            data.put(55, companyPayoutRatio.toArray());
+            data.put(56, companyDividendDate.toArray());
+            data.put(57, companyEx_DividendDate.toArray());
+            data.put(58, companyLastSplitFactor.toArray());
+            data.put(59, companyLastSplitDate.toArray());
+            Set<Integer> keyset = data.keySet();
             int rownum = 0;
-            for (String key : keyset) {
+            for (Integer key : keyset) {
                 HSSFRow row = sheet.createRow(rownum++);
                 Object[] objArr = data.get(key);
                 int cellnum = 0;
@@ -389,9 +403,9 @@ public class Controller {
                     workbook.write(out);
                 }
                 try {
-            Desktop.getDesktop().open(new File("D:\\new.xls"));
-            } catch (IOException k) {
-            }
+                    Desktop.getDesktop().open(new File("D:\\new.xls"));
+                } catch (IOException k) {
+                }
 
             } catch (FileNotFoundException ex) {
                 gui.showDialog();
@@ -401,4 +415,3 @@ public class Controller {
         }
     }
 }
-
