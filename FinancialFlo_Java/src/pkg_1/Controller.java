@@ -403,7 +403,7 @@ public class Controller {
                     workbook.write(out);
                 }
                 try {
-                    Desktop.getDesktop().open(new File("D:\\new.xls"));
+                    Desktop.getDesktop().open(new File("new.xls"));
                 } catch (IOException k) {
                 }
 
