@@ -399,7 +399,7 @@ public class Controller {
                 }
             }
             try {
-                try (FileOutputStream out = new FileOutputStream(new File("D:\\new.xls"))) {
+                try (FileOutputStream out = new FileOutputStream(new File("new.xls"))) {
                     workbook.write(out);
                 }
                 try {
