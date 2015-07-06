@@ -29,8 +29,7 @@ public class Controller {
 
     private final Model model;
     private final GUI gui;
-    private int counter = 0;
-    private final DefaultTableModel tm;
+    private final DefaultTableModel tm, tm2;
     private final List<Company> companies;
     private final List<String> companynames, companyMarketCaps, companyEnterpriseValues, companyTrailingPE, companyForwardPE, companyPEGRatio, companyPriceSales, companyPriceBook,
             companyEnterpriseValueRevenue, companyEnterpriseValueEBITDA, companyFiscalYearEnds, companyMostRecentQuarter, companyProfitMargin, companyOperatingMargin, companyReturnOnAssets,
@@ -41,7 +40,6 @@ public class Controller {
             companyPercentageHeldByInstitutions, companySharesShort1, companyShortRatio, companyShortPercentage, companySharesShort2, companyForwardAnnualDividendRate, companyForwardAnnualDividendYield,
             companyTrailingAnnualDividendYieldp, companyTrailingAnnualDividendYieldn, companyP_5YearAverageDividendYield, companyPayoutRatio, companyDividendDate, companyEx_DividendDate, companyLastSplitFactor,
             companyLastSplitDate;
-    private List<String> keywords;
     private SwingWorker worker;
 
     public Controller(final Model model, final GUI gui) {
@@ -54,6 +52,7 @@ public class Controller {
                 return false;
             }
         };
+        tm2 = new DefaultTableModel();
         this.companies = new ArrayList();
         this.companynames = new ArrayList();
         this.companyMarketCaps = new ArrayList();
@@ -114,6 +113,22 @@ public class Controller {
         this.companyEx_DividendDate = new ArrayList();
         this.companyLastSplitFactor = new ArrayList();
         this.companyLastSplitDate = new ArrayList();
+        initRows();
+        searchListener x = new searchListener();
+        this.gui.addSearchBarListener(x);
+        this.gui.addExcelButtonListener(new excelListener());
+        this.gui.addClearButtonListener(new clearListener());
+        this.gui.addDialogOKListener(new dialogListener());
+        this.gui.addSpreadListener(new spreadListener());
+        this.gui.addCloseSpreadListener(new closeSpreadListener());
+        gui.setTableModel(tm);
+        gui.setSpreadModel(tm2);
+        tm2.setColumnCount(10);
+        tm.addColumn("Symbol");
+        tm.addColumn("Company");
+    }
+
+    private void initRows() {
         companynames.add("Symbol");
         companyMarketCaps.add("Market Cap (intraday)");
         companyEnterpriseValues.add("Enterprise Value");
@@ -173,24 +188,15 @@ public class Controller {
         companyEx_DividendDate.add("Ex-Dividend Date");
         companyLastSplitFactor.add("Last Split Factor (new per old)");
         companyLastSplitDate.add("Last Split Date");
-        searchListener x = new searchListener();
-        this.gui.addSearchBarListener(x);
-        this.gui.addExcelButtonListener(new excelListener());
-        this.gui.addClearButtonListener(new clearListener());
-        this.gui.addDialogOKListener(new dialogListener());
-        gui.setTableModel(tm);
-        keywords = new ArrayList<>();
-        tm.addColumn("Symbol");
-        tm.addColumn("Company");
     }
 
     public Company getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
         GetHTMLData k = new GetHTMLData();
         Company c = k.getData(name);
         companies.add(c);
-        companynames.add(name);
         return c;
     }
+
     public SwingWorker makeWorker() {
         worker = new SwingWorker<String, Void>() {
 
@@ -203,7 +209,13 @@ public class Controller {
                         Company c = null;
                         try {
                             c = getCompany(s);
+                            gui.toggleExcelButton(true);
+                            gui.toggleSpreadButton(true);
                         } catch (IOException | ParserConfigurationException | SAXException ex) {
+                            if (tm.getRowCount() == 0) {
+                                gui.toggleExcelButton(false);
+                                gui.toggleSpreadButton(false);
+                            }
                             gui.showDialog();
                             gui.setDialogText("Connection Interrupted");
                         }
@@ -222,6 +234,7 @@ public class Controller {
         };
         return worker;
     }
+
     private class searchListener implements ActionListener {
 
         @Override
@@ -229,9 +242,77 @@ public class Controller {
             worker = makeWorker();
             gui.showLoad();
             worker.execute();
-            
-        }
 
+        }
+    }
+    private class closeSpreadListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gui.hideSpread();
+        }
+        
+    }
+    private void clearData() {
+        companynames.clear();
+        companyMarketCaps.clear();
+        companyEnterpriseValues.clear();
+        companyTrailingPE.clear();
+        companyForwardPE.clear();
+        companyPEGRatio.clear();
+        companyPriceSales.clear();
+        companyPriceBook.clear();
+        companyEnterpriseValueRevenue.clear();
+        companyEnterpriseValueEBITDA.clear();
+        companyFiscalYearEnds.clear();
+        companyMostRecentQuarter.clear();
+        companyProfitMargin.clear();
+        companyOperatingMargin.clear();
+        companyReturnOnAssets.clear();
+        companyReturnOnEquity.clear();
+        companyRevenue.clear();
+        companyRevenuePerShare.clear();
+        companyQtrlyRevenueGrowth.clear();
+        companyGrossProfit.clear();
+        companyEBITDA.clear();
+        companyNetIncomeAvlToCommon.clear();
+        companyDilutedEPS.clear();
+        companyQtrlyEarningsGrowth.clear();
+        companyTotalCash.clear();
+        companyTotalCashPerShare.clear();
+        companyTotalDebt.clear();
+        companyTotalDebtEquity.clear();
+        companyCurrentRatio.clear();
+        companyBookValuePerShare.clear();
+        companyOperatingCashFlow.clear();
+        companyLeveredFreeCashFlow.clear();
+        companyBeta.clear();
+        companyP_52_WeekChange.clear();
+        companySP50052_WeekChange.clear();
+        companyP_52_WeekHigh.clear();
+        companyP_52_WeekLow.clear();
+        companyP_50_DayMovingAverage.clear();
+        companyP_200_DayMovingAverage.clear();
+        companyAvgVol.clear();
+        companyAvgVol1.clear();
+        companySharesOutstanding.clear();
+        companyShareFloat.clear();
+        companyPercentageHeldByInsiders.clear();
+        companyPercentageHeldByInstitutions.clear();
+        companySharesShort1.clear();
+        companyShortRatio.clear();
+        companyShortPercentage.clear();
+        companySharesShort2.clear();
+        companyForwardAnnualDividendRate.clear();
+        companyForwardAnnualDividendYield.clear();
+        companyTrailingAnnualDividendYieldp.clear();
+        companyTrailingAnnualDividendYieldn.clear();
+        companyP_5YearAverageDividendYield.clear();
+        companyPayoutRatio.clear();
+        companyDividendDate.clear();
+        companyEx_DividendDate.clear();
+        companyLastSplitFactor.clear();
+        companyLastSplitDate.clear();
     }
 
     private class clearListener implements ActionListener {
@@ -240,8 +321,69 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             companies.clear();
             companynames.clear();
+            companyMarketCaps.clear();
+            companyEnterpriseValues.clear();
+            companyTrailingPE.clear();
+            companyForwardPE.clear();
+            companyPEGRatio.clear();
+            companyPriceSales.clear();
+            companyPriceBook.clear();
+            companyEnterpriseValueRevenue.clear();
+            companyEnterpriseValueEBITDA.clear();
+            companyFiscalYearEnds.clear();
+            companyMostRecentQuarter.clear();
+            companyProfitMargin.clear();
+            companyOperatingMargin.clear();
+            companyReturnOnAssets.clear();
+            companyReturnOnEquity.clear();
+            companyRevenue.clear();
+            companyRevenuePerShare.clear();
+            companyQtrlyRevenueGrowth.clear();
+            companyGrossProfit.clear();
+            companyEBITDA.clear();
+            companyNetIncomeAvlToCommon.clear();
+            companyDilutedEPS.clear();
+            companyQtrlyEarningsGrowth.clear();
+            companyTotalCash.clear();
+            companyTotalCashPerShare.clear();
+            companyTotalDebt.clear();
+            companyTotalDebtEquity.clear();
+            companyCurrentRatio.clear();
+            companyBookValuePerShare.clear();
+            companyOperatingCashFlow.clear();
+            companyLeveredFreeCashFlow.clear();
+            companyBeta.clear();
+            companyP_52_WeekChange.clear();
+            companySP50052_WeekChange.clear();
+            companyP_52_WeekHigh.clear();
+            companyP_52_WeekLow.clear();
+            companyP_50_DayMovingAverage.clear();
+            companyP_200_DayMovingAverage.clear();
+            companyAvgVol.clear();
+            companyAvgVol1.clear();
+            companySharesOutstanding.clear();
+            companyShareFloat.clear();
+            companyPercentageHeldByInsiders.clear();
+            companyPercentageHeldByInstitutions.clear();
+            companySharesShort1.clear();
+            companyShortRatio.clear();
+            companyShortPercentage.clear();
+            companySharesShort2.clear();
+            companyForwardAnnualDividendRate.clear();
+            companyForwardAnnualDividendYield.clear();
+            companyTrailingAnnualDividendYieldp.clear();
+            companyTrailingAnnualDividendYieldn.clear();
+            companyP_5YearAverageDividendYield.clear();
+            companyPayoutRatio.clear();
+            companyDividendDate.clear();
+            companyEx_DividendDate.clear();
+            companyLastSplitFactor.clear();
+            companyLastSplitDate.clear();
+            initRows();
             tm.setRowCount(0);
-            companynames.add("Symbol");
+            //companynames.add("Symbol");
+            gui.toggleExcelButton(false);
+            gui.toggleSpreadButton(false);
         }
     }
 
@@ -253,6 +395,195 @@ public class Controller {
         }
     }
 
+    private class spreadListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            companynames.clear();
+            companyMarketCaps.clear();
+            companyEnterpriseValues.clear();
+            companyTrailingPE.clear();
+            companyForwardPE.clear();
+            companyPEGRatio.clear();
+            companyPriceSales.clear();
+            companyPriceBook.clear();
+            companyEnterpriseValueRevenue.clear();
+            companyEnterpriseValueEBITDA.clear();
+            companyFiscalYearEnds.clear();
+            companyMostRecentQuarter.clear();
+            companyProfitMargin.clear();
+            companyOperatingMargin.clear();
+            companyReturnOnAssets.clear();
+            companyReturnOnEquity.clear();
+            companyRevenue.clear();
+            companyRevenuePerShare.clear();
+            companyQtrlyRevenueGrowth.clear();
+            companyGrossProfit.clear();
+            companyEBITDA.clear();
+            companyNetIncomeAvlToCommon.clear();
+            companyDilutedEPS.clear();
+            companyQtrlyEarningsGrowth.clear();
+            companyTotalCash.clear();
+            companyTotalCashPerShare.clear();
+            companyTotalDebt.clear();
+            companyTotalDebtEquity.clear();
+            companyCurrentRatio.clear();
+            companyBookValuePerShare.clear();
+            companyOperatingCashFlow.clear();
+            companyLeveredFreeCashFlow.clear();
+            companyBeta.clear();
+            companyP_52_WeekChange.clear();
+            companySP50052_WeekChange.clear();
+            companyP_52_WeekHigh.clear();
+            companyP_52_WeekLow.clear();
+            companyP_50_DayMovingAverage.clear();
+            companyP_200_DayMovingAverage.clear();
+            companyAvgVol.clear();
+            companyAvgVol1.clear();
+            companySharesOutstanding.clear();
+            companyShareFloat.clear();
+            companyPercentageHeldByInsiders.clear();
+            companyPercentageHeldByInstitutions.clear();
+            companySharesShort1.clear();
+            companyShortRatio.clear();
+            companyShortPercentage.clear();
+            companySharesShort2.clear();
+            companyForwardAnnualDividendRate.clear();
+            companyForwardAnnualDividendYield.clear();
+            companyTrailingAnnualDividendYieldp.clear();
+            companyTrailingAnnualDividendYieldn.clear();
+            companyP_5YearAverageDividendYield.clear();
+            companyPayoutRatio.clear();
+            companyDividendDate.clear();
+            companyEx_DividendDate.clear();
+            companyLastSplitFactor.clear();
+            companyLastSplitDate.clear();
+            initRows();
+            for (Company j : companies) {
+                companynames.add(j.getSymbol());
+                companyMarketCaps.add(j.getMarketCap());
+                companyEnterpriseValues.add(j.getEnterpriseValue());
+                companyTrailingPE.add(j.getTrailingPE());
+                companyForwardPE.add(j.getForwardPE());
+                companyPEGRatio.add(j.getPEGRatio());
+                companyPriceSales.add(j.getPriceSales());
+                companyPriceBook.add(j.getPriceBook());
+                companyEnterpriseValueRevenue.add(j.getEnterpriseValueRevenue());
+                companyEnterpriseValueEBITDA.add(j.getEnterpriseValueEBIDTA());
+                companyFiscalYearEnds.add(j.getFiscalYearEnds());
+                companyMostRecentQuarter.add(j.getMostRecentQuarter());
+                companyProfitMargin.add(j.getProfitMargin());
+                companyOperatingMargin.add(j.getOperatingMargin());
+                companyReturnOnAssets.add(j.getReturnOnAssets());
+                companyReturnOnEquity.add(j.getReturnOnEquity());
+                companyRevenue.add(j.getRevenue());
+                companyRevenuePerShare.add(j.getRevenuePerShare());
+                companyQtrlyRevenueGrowth.add(j.getQtrlyRevenueGrowth());
+                companyGrossProfit.add(j.getGrossProfit());
+                companyEBITDA.add(j.getEBITDA());
+                companyNetIncomeAvlToCommon.add(j.getnetIncomeAvlToCommon());
+                companyDilutedEPS.add(j.getdilutedEPS());
+                companyQtrlyEarningsGrowth.add(j.getqtrlyEarningsGrowth());
+                companyTotalCash.add(j.gettotalCash());
+                companyTotalCashPerShare.add(j.gettotalCashPerShare());
+                companyTotalDebt.add(j.getTotalDebt());
+                companyTotalDebtEquity.add(j.getTotalDebtEquity());
+                companyCurrentRatio.add(j.getCurrentRatio());
+                companyBookValuePerShare.add(j.getBookValuePerShare());
+                companyOperatingCashFlow.add(j.getOperatingCashFlow());
+                companyLeveredFreeCashFlow.add(j.getLeveredFreeCashFlow());
+                companyBeta.add(j.getBeta());
+                companyP_52_WeekChange.add(j.getP_52_WeekChange());
+                companySP50052_WeekChange.add(j.getSP50052_WeekChange());
+                companyP_52_WeekHigh.add(j.getP_52_WeekHigh());
+                companyP_52_WeekLow.add(j.getP_52_WeekLow());
+                companyP_50_DayMovingAverage.add(j.getP_50_DayMovingAverage());
+                companyP_200_DayMovingAverage.add(j.getP_200_DayMovingAverage());
+                companyAvgVol.add(j.getAvgVol1());
+                companyAvgVol1.add(j.getAvgVol2());
+                companySharesOutstanding.add(j.getSharesOutstanding());
+                companyShareFloat.add(j.getShareFloat());
+                companyPercentageHeldByInsiders.add(j.getPercentageHeldByInsiders());
+                companyPercentageHeldByInstitutions.add(j.getPercentageHeldByInstitutions());
+                companySharesShort1.add(j.getSharesShort1());
+                companyShortRatio.add(j.getShortRatio());
+                companyShortPercentage.add(j.getShortPercentage());
+                companySharesShort2.add(j.getSharesShort2());
+                companyForwardAnnualDividendRate.add(j.getForwardAnnualDividendRate());
+                companyForwardAnnualDividendYield.add(j.getForwardAnnualDividendYield());
+                companyTrailingAnnualDividendYieldp.add(j.getTrailingAnnualDividendYieldp());
+                companyTrailingAnnualDividendYieldn.add(j.getTrailingAnnualDividendYieldn());
+                companyP_5YearAverageDividendYield.add(j.getP_5YearAverageDividendYield());
+                companyPayoutRatio.add(j.getPayoutRatio());
+                companyDividendDate.add(j.getDividendDate());
+                companyEx_DividendDate.add(j.getEx_DividendDate());
+                companyLastSplitFactor.add(j.getLastSplitFactor());
+                companyLastSplitDate.add(j.getLastSplitDate());
+            }
+            tm2.setRowCount(0);
+            tm2.addRow(companynames.toArray());
+            tm2.addRow(companyMarketCaps.toArray());
+            tm2.addRow(companyEnterpriseValues.toArray());
+            tm2.addRow(companyTrailingPE.toArray());
+            tm2.addRow(companyForwardPE.toArray());
+            tm2.addRow(companyPEGRatio.toArray());
+            tm2.addRow(companyPriceSales.toArray());
+            tm2.addRow(companyPriceBook.toArray());
+            tm2.addRow(companyEnterpriseValueRevenue.toArray());
+            tm2.addRow(companyEnterpriseValueEBITDA.toArray());
+            tm2.addRow(companyFiscalYearEnds.toArray());
+            tm2.addRow(companyMostRecentQuarter.toArray());
+            tm2.addRow(companyProfitMargin.toArray());
+            tm2.addRow(companyOperatingMargin.toArray());
+            tm2.addRow(companyReturnOnAssets.toArray());
+            tm2.addRow(companyReturnOnEquity.toArray());
+            tm2.addRow(companyRevenue.toArray());
+            tm2.addRow(companyRevenuePerShare.toArray());
+            tm2.addRow(companyQtrlyRevenueGrowth.toArray());
+            tm2.addRow(companyGrossProfit.toArray());
+            tm2.addRow(companyEBITDA.toArray());
+            tm2.addRow(companyNetIncomeAvlToCommon.toArray());
+            tm2.addRow(companyDilutedEPS.toArray());
+            tm2.addRow(companyQtrlyEarningsGrowth.toArray());
+            tm2.addRow(companyTotalCash.toArray());
+            tm2.addRow(companyTotalCashPerShare.toArray());
+            tm2.addRow(companyTotalDebt.toArray());
+            tm2.addRow(companyTotalDebtEquity.toArray());
+            tm2.addRow(companyCurrentRatio.toArray());
+            tm2.addRow(companyBookValuePerShare.toArray());
+            tm2.addRow(companyOperatingCashFlow.toArray());
+            tm2.addRow(companyLeveredFreeCashFlow.toArray());
+            tm2.addRow(companyBeta.toArray());
+            tm2.addRow(companyP_52_WeekChange.toArray());
+            tm2.addRow(companySP50052_WeekChange.toArray());
+            tm2.addRow(companyP_52_WeekHigh.toArray());
+            tm2.addRow(companyP_52_WeekLow.toArray());
+            tm2.addRow(companyP_50_DayMovingAverage.toArray());
+            tm2.addRow(companyP_200_DayMovingAverage.toArray());
+            tm2.addRow(companyAvgVol.toArray());
+            tm2.addRow(companyAvgVol.toArray());
+            tm2.addRow(companySharesOutstanding.toArray());
+            tm2.addRow(companyShareFloat.toArray());
+            tm2.addRow(companyPercentageHeldByInsiders.toArray());
+            tm2.addRow(companyPercentageHeldByInstitutions.toArray());
+            tm2.addRow(companySharesShort1.toArray());
+            tm2.addRow(companyShortRatio.toArray());
+            tm2.addRow(companyShortPercentage.toArray());
+            tm2.addRow(companySharesShort2.toArray());
+            tm2.addRow(companyForwardAnnualDividendRate.toArray());
+            tm2.addRow(companyForwardAnnualDividendYield.toArray());
+            tm2.addRow(companyTrailingAnnualDividendYieldp.toArray());
+            tm2.addRow(companyTrailingAnnualDividendYieldn.toArray());
+            tm2.addRow(companyP_5YearAverageDividendYield.toArray());
+            tm2.addRow(companyPayoutRatio.toArray());
+            tm2.addRow(companyDividendDate.toArray());
+            tm2.addRow(companyEx_DividendDate.toArray());
+            tm2.addRow(companyLastSplitFactor.toArray());
+            tm2.addRow(companyLastSplitDate.toArray());
+            gui.showSpread();
+        }
+    }
+
     private class excelListener implements ActionListener {
 
         @Override
@@ -260,7 +591,68 @@ public class Controller {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("Sample sheet");
             Map<Integer, Object[]> data = new HashMap<>();
+            companynames.clear();
+            companyMarketCaps.clear();
+            companyEnterpriseValues.clear();
+            companyTrailingPE.clear();
+            companyForwardPE.clear();
+            companyPEGRatio.clear();
+            companyPriceSales.clear();
+            companyPriceBook.clear();
+            companyEnterpriseValueRevenue.clear();
+            companyEnterpriseValueEBITDA.clear();
+            companyFiscalYearEnds.clear();
+            companyMostRecentQuarter.clear();
+            companyProfitMargin.clear();
+            companyOperatingMargin.clear();
+            companyReturnOnAssets.clear();
+            companyReturnOnEquity.clear();
+            companyRevenue.clear();
+            companyRevenuePerShare.clear();
+            companyQtrlyRevenueGrowth.clear();
+            companyGrossProfit.clear();
+            companyEBITDA.clear();
+            companyNetIncomeAvlToCommon.clear();
+            companyDilutedEPS.clear();
+            companyQtrlyEarningsGrowth.clear();
+            companyTotalCash.clear();
+            companyTotalCashPerShare.clear();
+            companyTotalDebt.clear();
+            companyTotalDebtEquity.clear();
+            companyCurrentRatio.clear();
+            companyBookValuePerShare.clear();
+            companyOperatingCashFlow.clear();
+            companyLeveredFreeCashFlow.clear();
+            companyBeta.clear();
+            companyP_52_WeekChange.clear();
+            companySP50052_WeekChange.clear();
+            companyP_52_WeekHigh.clear();
+            companyP_52_WeekLow.clear();
+            companyP_50_DayMovingAverage.clear();
+            companyP_200_DayMovingAverage.clear();
+            companyAvgVol.clear();
+            companyAvgVol1.clear();
+            companySharesOutstanding.clear();
+            companyShareFloat.clear();
+            companyPercentageHeldByInsiders.clear();
+            companyPercentageHeldByInstitutions.clear();
+            companySharesShort1.clear();
+            companyShortRatio.clear();
+            companyShortPercentage.clear();
+            companySharesShort2.clear();
+            companyForwardAnnualDividendRate.clear();
+            companyForwardAnnualDividendYield.clear();
+            companyTrailingAnnualDividendYieldp.clear();
+            companyTrailingAnnualDividendYieldn.clear();
+            companyP_5YearAverageDividendYield.clear();
+            companyPayoutRatio.clear();
+            companyDividendDate.clear();
+            companyEx_DividendDate.clear();
+            companyLastSplitFactor.clear();
+            companyLastSplitDate.clear();
+            initRows();
             for (Company j : companies) {
+                companynames.add(j.getSymbol());
                 companyMarketCaps.add(j.getMarketCap());
                 companyEnterpriseValues.add(j.getEnterpriseValue());
                 companyTrailingPE.add(j.getTrailingPE());
@@ -409,6 +801,8 @@ public class Controller {
 
             } catch (FileNotFoundException ex) {
                 gui.showDialog();
+                clearData();
+                initRows();
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }

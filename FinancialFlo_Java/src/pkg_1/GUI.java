@@ -26,6 +26,10 @@ public class GUI extends javax.swing.JFrame {
         initComponents();
         this.setTitle("FinancialFlo");
         this.setIconImage(loadImageIcon("icon.png").getImage());
+        jFrame1.setIconImage(loadImageIcon("icon.png").getImage());
+        this.toggleExcelButton(false);
+        this.toggleSpreadButton(false);
+        this.setLocationRelativeTo(null);
     }
     private static ImageIcon loadImageIcon(String path) {
         URL imgURL = GUI.class.getResource(path);
@@ -50,6 +54,20 @@ public class GUI extends javax.swing.JFrame {
     public void addDialogOKListener(ActionListener a) {
         jButton1.addActionListener(a);
     }
+    public void addSpreadListener(ActionListener a) {
+        jButton2.addActionListener(a);
+    }
+    public void addCloseSpreadListener(ActionListener a) {
+        jButton5.addActionListener(a);
+    }
+    public void showSpread() {
+        jFrame1.setVisible(true);
+        jFrame1.setSize(1905,900);
+        jFrame1.setLocationRelativeTo(null);
+    }
+    public void hideSpread() {
+        jFrame1.setVisible(false);
+    }
     public void disableSearch() {
         searchButton.setEnabled(false);
     }
@@ -62,6 +80,7 @@ public class GUI extends javax.swing.JFrame {
     public void hideLoad() {
         loadLabel.setVisible(false);
     }
+    
     public void showLoad() {
         loadLabel.setSize(100,150);
         loadLabel.setVisible(true);
@@ -72,10 +91,14 @@ public class GUI extends javax.swing.JFrame {
     public void setTableModel (TableModel t){
         jTable2.setModel(t);
     }
+    public void setSpreadModel (TableModel t) {
+        spreadSheet.setModel(t);
+    }
     public void showDialog() {
         setDialogText("File is already open.");
         jDialog1.setVisible(true);
         jDialog1.setSize(391, 151);
+        jDialog1.setLocationRelativeTo(null);
     }
     public void hideDialog() {
         jDialog1.setVisible(false);
@@ -86,7 +109,12 @@ public class GUI extends javax.swing.JFrame {
     public JTextField getSearchBar() {
         return searchBar;
     }
-
+    public void toggleExcelButton(Boolean a) {
+        excelButton.setEnabled(a);
+    }
+    public void toggleSpreadButton(Boolean a) {
+        jButton2.setEnabled(a);
+    }
     
     
     /**
@@ -100,7 +128,10 @@ public class GUI extends javax.swing.JFrame {
 
         jFrame1 = new javax.swing.JFrame();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        spreadSheet = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
@@ -119,84 +150,115 @@ public class GUI extends javax.swing.JFrame {
         clearButton = new javax.swing.JButton();
         loadLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
-        jFrame1.setEnabled(false);
+        jFrame1.setTitle("FinancialFlo");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1920, 750));
+
+        spreadSheet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Market Cap (intraday):", null, null, null, null, null, null, null, null},
-                {"Enterprise Value:", null, null, null, null, null, null, null, null},
-                {"Trailing P/E (ttm, intraday):", null, null, null, null, null, null, null, null},
-                {"Forward P/E:", null, null, null, null, null, null, null, null},
-                {"PEG Ratio (5 yr expected):", null, null, null, null, null, null, null, null},
-                {"Price/Sales (ttm):", null, null, null, null, null, null, null, null},
-                {"Price/Book (mrq):", null, null, null, null, null, null, null, null},
-                {"Enterprise Value/Revenue (ttm):", null, null, null, null, null, null, null, null},
-                {"Enterprise Value/EBITDA (ttm):", null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {"Profit Margin (ttm):", null, null, null, null, null, null, null, null},
-                {"Operating Margin (ttm):", null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {"Return on Assets (ttm):", null, null, null, null, null, null, null, null},
-                {"Return on Equity (ttm):", null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {"Revenue (ttm):", null, null, null, null, null, null, null, null},
-                {"Revenue Per Share (ttm):", null, null, null, null, null, null, null, null},
-                {"Qtrly Revenue Growth (yoy):", null, null, null, null, null, null, null, null},
-                {"Gross Profit (ttm):", null, null, null, null, null, null, null, null},
-                {"EBITDA (ttm):", null, null, null, null, null, null, null, null},
-                {"Net Income Avl to Common (ttm):", null, null, null, null, null, null, null, null},
-                {"Diluted EPS (ttm):", null, null, null, null, null, null, null, null},
-                {"Qtrly Earnings Growth (yoy):", null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {"Total Cash (mrq):", null, null, null, null, null, null, null, null},
-                {"Total Cash Per Share (mrq):", null, null, null, null, null, null, null, null},
-                {"Total Debt (mrq):", null, null, null, null, null, null, null, null},
-                {"Total Debt/Equity (mrq):", null, null, null, null, null, null, null, null},
-                {"Current Ratio (mrq):", null, null, null, null, null, null, null, null},
-                {"Book Value Per Share (mrq):", null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {"Operating Cash Flow (ttm): ", null, null, null, null, null, null, null, null},
-                {"Levered Free Cash Flow (ttm): ", null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {"mrq=most recent quarter", null, null, null, null, null, null, null, null},
-                {"ttm=trailing twelve months", null, null, null, null, null, null, null, null}
+                {"Market Cap (intraday):", null, null, null, null, null, null, null, null, null},
+                {"Enterprise Value:", null, null, null, null, null, null, null, null, null},
+                {"Trailing P/E (ttm, intraday):", null, null, null, null, null, null, null, null, null},
+                {"Forward P/E:", null, null, null, null, null, null, null, null, null},
+                {"PEG Ratio (5 yr expected):", null, null, null, null, null, null, null, null, null},
+                {"Price/Sales (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Price/Book (mrq):", null, null, null, null, null, null, null, null, null},
+                {"Enterprise Value/Revenue (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Enterprise Value/EBITDA (ttm):", null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {"Profit Margin (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Operating Margin (ttm):", null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {"Return on Assets (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Return on Equity (ttm):", null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {"Revenue (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Revenue Per Share (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Qtrly Revenue Growth (yoy):", null, null, null, null, null, null, null, null, null},
+                {"Gross Profit (ttm):", null, null, null, null, null, null, null, null, null},
+                {"EBITDA (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Net Income Avl to Common (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Diluted EPS (ttm):", null, null, null, null, null, null, null, null, null},
+                {"Qtrly Earnings Growth (yoy):", null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {"Total Cash (mrq):", null, null, null, null, null, null, null, null, null},
+                {"Total Cash Per Share (mrq):", null, null, null, null, null, null, null, null, null},
+                {"Total Debt (mrq):", null, null, null, null, null, null, null, null, null},
+                {"Total Debt/Equity (mrq):", null, null, null, null, null, null, null, null, null},
+                {"Current Ratio (mrq):", null, null, null, null, null, null, null, null, null},
+                {"Book Value Per Share (mrq):", null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {"Operating Cash Flow (ttm): ", null, null, null, null, null, null, null, null, null},
+                {"Levered Free Cash Flow (ttm): ", null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {"mrq=most recent quarter", null, null, null, null, null, null, null, null, null},
+                {"ttm=trailing twelve months", null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {"????", null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "", "Title 1", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
+                "", "Title 1", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(250);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(250);
+        spreadSheet.setPreferredSize(new java.awt.Dimension(1920, 1210));
+        jScrollPane1.setViewportView(spreadSheet);
+        if (spreadSheet.getColumnModel().getColumnCount() > 0) {
+            spreadSheet.getColumnModel().getColumn(0).setMinWidth(250);
+            spreadSheet.getColumnModel().getColumn(0).setMaxWidth(250);
         }
+
+        jButton3.setText("Highlight Best Stats");
+        jButton3.setEnabled(false);
+
+        jButton4.setText("Save as Excel Document");
+        jButton4.setEnabled(false);
+
+        jButton5.setText("Close");
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1905, Short.MAX_VALUE)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton5))
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrame1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 129, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTextArea1.setColumns(20);
@@ -327,8 +389,10 @@ public class GUI extends javax.swing.JFrame {
         searchButton.setText("Add");
 
         excelButton.setText("Convert to Excel");
+        excelButton.setToolTipText("Create an excel document");
 
         clearButton.setText("Clear");
+        clearButton.setToolTipText("Clear the table");
 
         loadLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg_1/ajax-loader.gif"))); // NOI18N
         loadLabel.setText("Retrieving....");
@@ -337,51 +401,58 @@ public class GUI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 2, 11)); // NOI18N
         jLabel3.setText("A wise man once said: \"Money, is my major\"");
 
+        jButton2.setText("Generate Spreadsheet");
+        jButton2.setToolTipText("Maximum of 10 companies");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(clearButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(excelButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(searchButton))
-                                .addComponent(loadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchButton))
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(loadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(2, 2, 2)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(excelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(excelButton)
                             .addComponent(clearButton)
-                            .addComponent(jLabel3)))
+                            .addComponent(jLabel3)
+                            .addComponent(jButton2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(searchButton)
                             .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
-                        .addGap(69, 69, 69)
+                        .addGap(103, 103, 103)
                         .addComponent(loadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -442,6 +513,10 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel dialogMsg;
     private javax.swing.JButton excelButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
@@ -451,12 +526,12 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel loadLabel;
     private javax.swing.JTextField searchBar;
     private javax.swing.JButton searchButton;
+    private javax.swing.JTable spreadSheet;
     // End of variables declaration//GEN-END:variables
 }
