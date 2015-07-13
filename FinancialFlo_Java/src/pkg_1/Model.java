@@ -19,7 +19,7 @@ public class Model {
     
     public Model(TreeMap<String, Company> companyMap) throws IOException{
         this.companyMap = companyMap;
-        loadCompanyNames();
+
     }
     
     public Set <String> getMap() {
@@ -28,20 +28,10 @@ public class Model {
     
     public void addToMap(String name, Company k) {
         this.companyMap.put(name, k);
+        this.companyNames.put(name, k.getCompanyName());
     }
     
-    private void loadCompanyNames() throws FileNotFoundException, IOException {
-        this.companyNames = new TreeMap();
-        FileInputStream fstream1 = new FileInputStream("all.txt");
-        BufferedReader br1 = new BufferedReader(new InputStreamReader(fstream1));
-        String line;
-        
-        while ((line = br1.readLine()) != null) {
-            line = line.replaceAll("\\s+"," ");
-            companyNames.put(line.substring(0,line.indexOf(" ")), line.substring(line.indexOf(" ")+1));
-        }
-        br1.close();
-    }
+
     public Set<String> getSymbols() {
         return this.companyNames.keySet();
     }

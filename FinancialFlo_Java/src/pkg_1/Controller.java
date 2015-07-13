@@ -16,6 +16,8 @@ import java.util.Set;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
@@ -121,11 +123,13 @@ public class Controller {
         this.gui.addDialogOKListener(new dialogListener());
         this.gui.addSpreadListener(new spreadListener());
         this.gui.addCloseSpreadListener(new closeSpreadListener());
+        this.gui.addSearchListener(new enterListener());
         gui.setTableModel(tm);
         gui.setSpreadModel(tm2);
         tm2.setColumnCount(10);
         tm.addColumn("Symbol");
         tm.addColumn("Company");
+        tm.addColumn("Exchange");
     }
 
     private void initRows() {
@@ -193,7 +197,7 @@ public class Controller {
     public Company getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
         GetHTMLData k = new GetHTMLData();
         Company c = k.getData(name);
-        companies.add(c);
+        System.out.println(companies.toArray());
         return c;
     }
 
@@ -205,10 +209,20 @@ public class Controller {
                 while (!isCancelled()) {
                     gui.disableSearch();
                     String s = gui.getSearchText().toUpperCase();
-                    if ((s.length() != 0) == true && (model.getSymbols().contains(s.toUpperCase())) == true) {
+                    if ((s.length() != 0) == true) {
                         Company c = null;
                         try {
                             c = getCompany(s);
+                            if (c == null) {
+                                gui.showDialog();
+                                gui.setDialogText("Invalid Entry");
+                                gui.enableSearch();
+                                gui.hideLoad();
+                                cancel(true);
+                                gui.getSearchBar().setText("");
+                                return null;
+                            }
+                            companies.add(c);
                             gui.toggleExcelButton(true);
                             gui.toggleSpreadButton(true);
                         } catch (IOException | ParserConfigurationException | SAXException ex) {
@@ -219,7 +233,7 @@ public class Controller {
                             gui.showDialog();
                             gui.setDialogText("Connection Interrupted");
                         }
-                        tm.addRow(new Object[]{c.getSymbol(), model.getCompanyMap().get(c.getSymbol())});
+                        tm.addRow(new Object[]{c.getSymbol(), c.getCompanyName(), c.getExchange()});
                         gui.getSearchBar().setText("");
                     } else {
                         gui.showDialog();
@@ -245,14 +259,16 @@ public class Controller {
 
         }
     }
+
     private class closeSpreadListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             gui.hideSpread();
         }
-        
+
     }
+
     private void clearData() {
         companynames.clear();
         companyMarketCaps.clear();
@@ -393,6 +409,15 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             gui.hideDialog();
         }
+    }
+
+    private class enterListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gui.getSearchButton().doClick();
+        }
+
     }
 
     private class spreadListener implements ActionListener {
