@@ -1,3 +1,7 @@
+#app-layout {
+    font-family: sans-serif;
+}
+
 .topbar-nav {
     list-style-type: none;
     margin: 0;
@@ -25,11 +29,32 @@
     background-color: #111;
 }
 
-.search-body {
+.search-container {
     background: url("/assets/finance-wallpaper-financial-gold-sheet-calculator-picture-hd-420853.jpg") no-repeat;
-    width:1000px;
-    height:1000px;
+    width: 1880px;
+    height:500px;
+    display:block;
+    overflow:auto;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    margin-top: 10px;
+    display: inline;
 }
 
+.search-container-inner {
+    height: auto;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: relative;
+    margin: auto;
+    width: 500px;
+}
+
+.search-bar {
+    width: 100%;
+}
 
 
