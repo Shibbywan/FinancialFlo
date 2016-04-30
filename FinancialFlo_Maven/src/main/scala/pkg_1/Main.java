@@ -10,10 +10,12 @@ package pkg_1;
  * @author Kevin
  */
 import java.util.HashMap;
+import spark.Spark;
 import static spark.Spark.*;
 
 public class Main {
     public static void main(String[] args) {
+
         externalStaticFileLocation("src/main/resources");
         get("/", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
