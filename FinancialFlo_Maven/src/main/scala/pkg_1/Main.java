@@ -9,10 +9,16 @@ package pkg_1;
  *
  * @author Kevin
  */
+import java.util.HashMap;
 import static spark.Spark.*;
 
 public class Main {
     public static void main(String[] args) {
-        get("/hello", (req, res) -> "Hello World");
+        externalStaticFileLocation("src/main/resources");
+        get("/", (req, res) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            ViewUtil view = new ViewUtil();
+            return view.render("views/home.html", model);
+        });
     }
 }
