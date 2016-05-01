@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html  lang="en">
-  <head>
-    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
-    <meta  http-equiv="X-UA-Compatible"  content="IE=edge">
-    <meta  name="viewport"  content="width=device-width, initial-scale=1">
-    <title>FinancialFlo</title>
-  </head>
-  <body  id="app-layout">
-      <!-- Stylesheets -->
-      <link rel="stylesheet" type="text/css" href="public/css/home.css">
-    <nav  class="topbar topbar-default">
-      <div  class="container-topbar">
-        <div  class="collapse topbar-collapse"  id="app-topbar-collapse">
-          <!-- Left side of topbar -->
-          <ul  class="nav topbar-nav">
-            <li>
-              <div  class="topbar-text"><a  href="">Home</a></div>
-            </li>
-            <li>
-              <div  class="topbar-text"><a  href="">Compare</a></div>
-            </li>
-            <li>
-              <div  class="topbar-text"><a  href="">About</a></div>
-            </li>
-            <li>
-                <div class="login-btn"><a href="">Login</a></div>
-            </li>
-          </ul>
+    <head>
+        <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+        <meta  http-equiv="X-UA-Compatible"  content="IE=edge">
+        <meta  name="viewport"  content="width=device-width, initial-scale=1">
+        <title>FinancialFlo</title>
+    </head>
+    <body  id="app-layout">
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="public/css/home.css">
+        <link rel="stylesheet" href="public/css/styles.css">
+
+        <!-- Scripts -->
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="public/scripts/script.js"></script>
+        <div id='cssmenu'>
+            <ul>
+                <li><a href='#'>Home</a></li>
+                <li class='active has-sub'><a href='#'>Products</a>
+                    <ul>
+                        <li class='has-sub'><a href='#'>Product 1</a>
+                            <ul>
+                                <li><a href='#'>Sub Product</a></li>
+                                <li><a href='#'>Sub Product</a></li>
+                            </ul>
+                        </li>
+                        <li class='has-sub'><a href='#'>Product 2</a>
+                            <ul>
+                                <li><a href='#'>Sub Product</a></li>
+                                <li><a href='#'>Sub Product</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href='#'>About</a></li>
+                <li><a href='#'>Contact</a></li>
+            </ul>
         </div>
-        <!-- Right side of topbar -->
-        <div  class="topbar-right"></div>
-    </nav>
-      <div class ="search-container">
-          <div class="search-container-inner">
-              <div class="form-group">
-                <input name="search-bar" type="search" class="search-bar">
-              </div>
-          </div>
-      </div>
-  </body>
+        <div class="flexsearch">
+            <div class="flexsearch--wrapper">
+                <h1> FinancialFlo </h1>
+                <form class="flexsearch--form" action="#" method="post">
+                    <div class="flexsearch--input-wrapper">
+                        <input class="flexsearch--input" type="search" placeholder="Enter a Company">
+                    </div>
+                    <input class="flexsearch--submit" type="submit" value="&#10140;" />
+                </form>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-inner">
+                COPYRIGHT &copy; 2016 BY JEFFREY NIGRE
+                <br>
+                ALL RIGHTS RESERVED
+            </div>
+        </div>
+    </body>
 </html>

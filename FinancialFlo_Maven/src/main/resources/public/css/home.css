@@ -1,6 +1,10 @@
 #app-layout {
     font-family: sans-serif;
 }
+html,body {
+    margin:0;
+    padding:0;
+}
 
 .topbar-nav {
     list-style-type: none;
@@ -8,6 +12,7 @@
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    border-bottom: 1px solid white;
 }
 
 .topbar-nav li {
@@ -21,7 +26,7 @@
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 25px 16px;
     text-decoration: none;
 }
 
@@ -30,15 +35,15 @@
 }
 
 .search-container {
-    background: url("/assets/finance-wallpaper-financial-gold-sheet-calculator-picture-hd-420853.jpg") no-repeat;
-    width: 1880px;
+    background: url("/assets/footer_lodyas.png");
+    background-repeat: repeat-y;
+    width: 100%;
     height:500px;
     display:block;
     overflow:auto;
     margin-left: auto;
     margin-right: auto;
     position: absolute;
-    margin-top: 10px;
     display: inline;
 }
 
@@ -55,6 +60,134 @@
 
 .search-bar {
     width: 100%;
+}
+
+.flexsearch--wrapper {
+    height: auto;
+    width: 500px;
+    background: transparent;
+    margin: auto;
+    position: relative;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+h1 {
+    color: #ffffff; 
+    font-family: 'Lato', sans-serif; 
+    font-size: 54px; 
+    font-weight: 300; 
+    line-height: 58px; 
+    position: absolute;
+    margin-top: 100px;
+    margin-left: 25%;
+    margin-right: 0;
+    width: 50%;
+}
+
+.flexsearch--form {
+    overflow: hidden;
+    position: relative;
+}
+
+.flexsearch--input-wrapper {
+    padding: 0 66px 0 0; /* Right padding for submit button width */
+    overflow: hidden;
+}
+
+.flexsearch--input {
+    width: 100%;
+}
+
+/***********************
+ * Configurable Styles *
+ ***********************/
+.flexsearch {
+    background: url("/assets/footer_lodyas.png");
+    width: 100%;
+    height:950px;
+    display:block;
+    overflow:auto;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    display: inline;
+    border-bottom: 3px #009ae1 solid;
+}
+
+.flexsearch--input {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 60px;
+    padding: 0 46px 0 10px;
+    border-color: #888;
+    border-radius: 35px; /* (height/2) + border-width */
+    border-style: solid;
+    border-width: 5px;
+    margin-top: 210px;
+    color: #333;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 26px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.flexsearch--submit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: none;
+    margin-top: 215px; /* margin-top + border-width */
+    margin-right: 5px; /* border-width */
+    background: transparent;
+    color: #888;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 40px;
+    line-height: 60px;
+}
+
+.flexsearch--input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+.flexsearch--input:focus.flexsearch--submit {
+    color: #333; 
+}
+
+.flexsearch--submit:hover {
+    color: #333;
+    cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+    color: #888;  
+}
+
+input:-moz-placeholder {
+    color: #888
+}
+
+.footer {
+    margin-top: 950px;
+    background-color: #ffffff;
+
+    height: 50px;
+}
+
+.footer-inner {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    font-size: 16px; 
+    line-height: 26px; 
 }
 
 
