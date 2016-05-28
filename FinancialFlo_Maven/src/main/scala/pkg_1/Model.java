@@ -1,9 +1,12 @@
 package pkg_1;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -35,5 +38,11 @@ public class Model {
     
     public Map<String, String> getCompanyMap() {
         return this.companyNames;
+    }
+    
+        public Company getCompany(String name) throws IOException, MalformedURLException, ParserConfigurationException, SAXException {
+        GetHTMLData k = new GetHTMLData();
+        Company c = k.getData(name);
+        return c;
     }
 }

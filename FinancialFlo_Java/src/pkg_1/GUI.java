@@ -65,12 +65,13 @@ public class GUI extends javax.swing.JFrame {
         jButton5.addActionListener(a);
     }
     public void showSpread() {
-        jFrame1.setVisible(true);
-        jFrame1.setSize(1905,900);
-        jFrame1.setLocationRelativeTo(null);
+        jTabbedPane1.addTab("Test", jFrame1.getContentPane());
+        //jFrame1.setVisible(true);
+        //jFrame1.setSize(1905,900);
+        //jFrame1.setLocationRelativeTo(null);
     }
     public void hideSpread() {
-        jFrame1.setVisible(false);
+        //jFrame1.setVisible(false);
     }
     public void disableSearch() {
         searchButton.setEnabled(false);
@@ -145,6 +146,7 @@ public class GUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         dialogMsg = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -462,18 +464,26 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(125, 125, 125)
                         .addComponent(loadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 240, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
+
+        jTabbedPane1.addTab("Home", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 753, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -546,6 +556,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;

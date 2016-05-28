@@ -5,9 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -25,6 +28,7 @@ public class Model {
     public Set <String> getMap() {
         return this.companyMap.keySet();
     }
+
     
     public void addToMap(String name, Company k) {
         this.companyMap.put(name, k);

@@ -8,13 +8,13 @@ package pkg_1;
 import java.util.HashMap;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
-
+import spark.template.freemarker.FreeMarkerEngine;
 /**
  *
  * @author Kevin
  */
 public class ViewUtil {
     public static String render(String templatePath, HashMap<String, Object> model) {
-        return new VelocityTemplateEngine().render(new ModelAndView(model, templatePath));
+        return new FreeMarkerEngine().render(new ModelAndView(model, templatePath));
     }
 }
