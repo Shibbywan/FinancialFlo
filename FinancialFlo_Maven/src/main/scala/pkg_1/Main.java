@@ -92,7 +92,18 @@ public class Main {
             var.put("qtrlyEarningsGrowth", k.getqtrlyEarningsGrowth());
             var.put("totalCash", k.gettotalCash());
             var.put("totalCashPerShare", k.gettotalCashPerShare());
-            
+            var.put("averageDailyVolume", k.getAverageDailyVolume());
+            var.put("change", k.getChange());
+            var.put("daysLow", k.getDaysLow());
+            var.put("daysHigh", k.getDaysHigh());
+            var.put("yearLow", k.getYearLow());
+            var.put("yearHigh", k.getYearHigh());
+            var.put("marketCapitalization", k.getMarketCapitalization());
+            var.put("lastTradePriceOnly", k.getLastTradePriceOnly());
+            var.put("daysRange", k.getDaysRange());
+            var.put("volume", k.getVolume());
+            var.put("stockExchange", k.getStockExchange());
+            var.put("ask", k.getAsk());
             return var;
     }
     

@@ -7,15 +7,16 @@ public class Company {
                 leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
                 avgVol1, avgVol2, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions,sharesShort1, shortRatio, shortPercentage, sharesShort2,
                 forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
-                payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate;
+                payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate, averageDailyVolume, change, daysLow, daysHigh, yearLow, yearHigh, marketCapitalization, lastTradePriceOnly,daysRange, volume, stockExchange, ask;
     
     public Company(String symbol,String companyName,String exchange, String marketCap, String enterpriseValue, String trailingPE, String forwardPE, String pegRatio, String priceSales, String priceBook, String enterpriseValueRevenue,String enterpriseValueEBITDA,
                 String fiscalYearEnds, String mostRecentQuarter, String profitMargin,  String operatingMargin, String returnOnAssets, String returnOnEquity, String revenue, String revenuePerShare, String qtrlyRevenueGrowth, String grossProfit, String ebitda, String netIncomeAvlToCommon,
                 String dilutedEPS, String qtrlyEarningsGrowth, String totalCash,  String totalCashPerShare, String totalDebt, String totalDebtEquity, String currentRatio, String bookValuePerShare, String operatingCashFlow,
                 String leveredFreeCashFlow, String beta, String p_52_WeekChange, String SP50052_WeekChange, String p_52_WeekHigh, String p_52_WeekLow, String p_50_DayMovingAverage, String p_200_DayMovingAverage,
-                 String avgVol1, String avgVol2, String sharesOutstanding, String shareFloat, String percentageHeldByInsiders, String percentageHeldByInstitutions, String sharesShort1, String shortRatio, String shortPercentage, String sharesShort2,
+                String avgVol1, String avgVol2, String sharesOutstanding, String shareFloat, String percentageHeldByInsiders, String percentageHeldByInstitutions, String sharesShort1, String shortRatio, String shortPercentage, String sharesShort2,
                 String forwardAnnualDividendRate, String forwardAnnualDividendYield, String trailingAnnualDividendYieldp, String trailingAnnualDividendYieldn, String p_5YearAverageDividendYield, 
-                String payoutRatio, String dividendDate, String ex_DividendDate, String lastSplitFactor, String lastSplitDate) {
+                String payoutRatio, String dividendDate, String ex_DividendDate, String lastSplitFactor, String lastSplitDate, String averageDailyVolume, String change, String daysLow, String daysHigh, String yearLow, String yearHigh, String marketCapitalization,
+                String lastTradePriceOnly, String daysRange, String volume, String stockExchange, String ask) {
         this.symbol = symbol;
         this.companyName = companyName;
         this.exchange = exchange;
@@ -77,6 +78,19 @@ public class Company {
         this.ex_DividendDate = ex_DividendDate;
         this.lastSplitDate = lastSplitDate;
         this.lastSplitFactor = lastSplitFactor;
+        this.change = change;
+        this.averageDailyVolume = averageDailyVolume;
+        this.daysLow = daysLow;
+        this.daysHigh = daysHigh;
+        this.yearLow = yearLow;
+        this.yearHigh = yearHigh;
+        this.marketCapitalization = marketCapitalization;
+        this.lastTradePriceOnly = lastTradePriceOnly;
+        this.daysRange = daysRange;
+        this.volume = volume;
+        this.stockExchange = stockExchange;
+        this.ask = ask;
+    
     }
     public String getSymbol() {
         return this.symbol;
@@ -319,5 +333,53 @@ public class Company {
     
     public String getLastSplitDate() {
         return this.lastSplitDate;
+    }
+    
+    public String getAverageDailyVolume() {
+        return this.averageDailyVolume;
+    }
+    
+    public String getChange() {
+        return this.change;
+    }
+    
+    public String getDaysLow() {
+        return this.daysLow;
+    }
+    
+    public String getDaysHigh() {
+        return this.daysHigh;
+    }
+    
+    public String getYearLow() {
+        return this.yearLow;
+    }
+    
+    public String getYearHigh() {
+        return this.yearHigh;
+    }
+    
+    public String getMarketCapitalization() {
+        return this.marketCapitalization;
+    }
+    
+    public String getLastTradePriceOnly() {
+        return this.lastTradePriceOnly;
+    }
+    
+    public String getDaysRange() {
+        return this.daysRange;
+    }
+    
+    public String getVolume() {
+        return this.volume;
+    }
+    
+    public String getStockExchange() {
+        return this.stockExchange;
+    }
+    
+    public String getAsk() {
+        return this.ask;
     }
 }

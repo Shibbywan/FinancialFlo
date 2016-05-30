@@ -1,12 +1,21 @@
 package pkg_1;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -14,15 +23,17 @@ import org.xml.sax.SAXException;
  * @author Kevin
  */
 public class GetHTMLData {
-
-    public Company getData(String company) throws SAXException, IOException {
+    private final String s1 = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20%28%22";
+    private final String s2 = "%22%29&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env";
+    
+    public Company getData(String company) throws SAXException, IOException, ParserConfigurationException {
         String marketCap = null, enterpriseValue = null, trailingPE = null, forwardPE = null, pegRatio = null, priceSales = null, priceBook = null, enterpriseValueRevenue = null, enterpriseValueEBITDA = null,
                 fiscalYearEnds = null, mostRecentQuarter = null, profitMargin = null, operatingMargin = null, returnOnAssets = null, returnOnEquity = null, revenue = null, revenuePerShare = null, qtrlyRevenueGrowth = null, grossProfit = null, ebitda = null, netIncomeAvlToCommon = null,
                 dilutedEPS = null, qtrlyEarningsGrowth = null, totalCash = null, totalCashPerShare = null, totalDebt = null, totalDebtEquity = null, currentRatio = null, bookValuePerShare = null, operatingCashFlow = null,
                 leveredFreeCashFlow = null, beta = null, p_52_WeekChange = null, SP50052_WeekChange = null, p_52_WeekHigh = null, p_52_WeekLow = null, p_50_DayMovingAverage = null, p_200_DayMovingAverage = null,
                 avgVol = null, avgVol1 = null, sharesOutstanding = null, shareFloat = null, percentageHeldByInsiders = null, percentageHeldByInstitutions = null, shortRatio = null, shortPercentage = null, sharesShort1 = null, sharesShort2 = null,
                 forwardAnnualDividendRate = null, forwardAnnualDividendYield = null, trailingAnnualDividendYieldp = null, trailingAnnualDividendYieldn = null, p_5YearAverageDividendYield = null,
-                payoutRatio = null, dividendDate = null, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, t, temp = "";
+                payoutRatio = null, dividendDate = null, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, averageDailyVolume = null, change = null, daysLow = null, daysHigh = null, yearLow = null, yearHigh = null, marketCapitalization = null, lastTradePriceOnly = null, daysRange = null, symbol = null, volume = null, stockExchange = null, ask = null, t, temp = "";
         int z = -1;
 
         String link = "https://finance.yahoo.com/q/ks?s=" + company;
@@ -30,6 +41,37 @@ public class GetHTMLData {
         con.setInstanceFollowRedirects(false);
         con.connect();
         int responseCode = con.getResponseCode();
+                          URL url = new URL(s1 + company + s2);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/xml");
+        InputStream xml = connection.getInputStream();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        org.w3c.dom.Document docc = (org.w3c.dom.Document) db.parse(xml);
+        
+        docc.getDocumentElement().normalize();
+        
+        NodeList nl = docc.getElementsByTagName("results");
+        int length = nl.getLength();
+        for (int i = 0; i < length; i++) {
+            Node firstNode = nl.item(i);
+            if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+                 Element firstElement = (Element) firstNode;
+                 averageDailyVolume = docc.getElementsByTagName("AverageDailyVolume").item(0).getTextContent();
+                 change = docc.getElementsByTagName("Change").item(0).getTextContent();
+                 daysLow = docc.getElementsByTagName("DaysLow").item(0).getTextContent();
+                 daysHigh = docc.getElementsByTagName("DaysHigh").item(0).getTextContent();
+                 yearLow = docc.getElementsByTagName("YearLow").item(0).getTextContent();
+                 yearHigh = docc.getElementsByTagName("YearHigh").item(0).getTextContent();
+                 marketCapitalization = docc.getElementsByTagName("MarketCapitalization").item(0).getTextContent();
+                 lastTradePriceOnly = docc.getElementsByTagName("LastTradePriceOnly").item(0).getTextContent();
+                 daysRange = docc.getElementsByTagName("DaysRange").item(0).getTextContent();
+                 stockExchange = docc.getElementsByTagName("StockExchange").item(0).getTextContent();
+                 ask = docc.getElementsByTagName("Ask").item(0).getTextContent();
+
+            }
+        }
         if (responseCode == 200) {
         
             Document doc = (Document) Jsoup.connect(link).get();
@@ -46,6 +88,7 @@ public class GetHTMLData {
             k = parts[0];
             k = k.trim();
             StringTokenizer st = new StringTokenizer(k);
+            
             while (st.hasMoreTokens()) {
                 t = st.nextToken(":");
                 if (z == 0) {
@@ -237,7 +280,7 @@ public class GetHTMLData {
                     leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
                     avgVol, avgVol1, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, sharesShort1, shortRatio, shortPercentage, sharesShort2,
                     forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield,
-                    payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate);
+                    payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate, averageDailyVolume, change, daysLow, daysHigh, yearLow, yearHigh, marketCapitalization, lastTradePriceOnly,daysRange, volume, stockExchange, ask);
             return c;
         } else {
             return null;
