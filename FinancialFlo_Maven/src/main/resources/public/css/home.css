@@ -1,9 +1,15 @@
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
 #app-layout {
     font-family: sans-serif;
 }
 html,body {
     margin:0;
     padding:0;
+}
+
+.topbar {
+    width: 100%;
+    background: #1f7f5c;
 }
 
 .topbar-nav {
@@ -34,29 +40,7 @@ html,body {
     background-color: #111;
 }
 
-.search-container {
-    background: url("/assets/footer_lodyas.png");
-    background-repeat: repeat-y;
-    width: 100%;
-    height:500px;
-    display:block;
-    overflow:auto;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    display: inline;
-}
 
-.search-container-inner {
-    height: auto;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: relative;
-    margin: auto;
-    width: 500px;
-}
 
 .search-bar {
     width: 100%;
@@ -74,8 +58,8 @@ html,body {
     right: 0;
 }
 
-h1 {
-    color: #ffffff; 
+.flexsearch--wrapper h1 {
+    color: #333;
     font-family: 'Lato', sans-serif; 
     font-size: 54px; 
     font-weight: 300; 
@@ -105,13 +89,12 @@ h1 {
  * Configurable Styles *
  ***********************/
 .flexsearch {
-    background: url("/assets/footer_lodyas.png");
-    width: 100%;
-    height:950px;
+    background-image: url("/assets/white-img.png");
+    background-repeat: repeat-x;
+    width:100%;
+    height:900px;
     display:block;
-    overflow:auto;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0px;
     position: absolute;
     display: inline;
     border-bottom: 3px #009ae1 solid;
@@ -190,4 +173,81 @@ input:-moz-placeholder {
     line-height: 26px; 
 }
 
+.nav {
+    background: #232323;
+    height: 100%;
+    display: inline-block;
+    margin: 0px;
+    padding: 0;
+    width: 100%;
+}
 
+#topbar {
+    height: 60px;
+}
+
+ 
+.nav li {
+    float: left;
+    list-style-type: none;
+    position: relative;
+}
+.nav li a {
+    font-size: 16px;
+    color: white;
+    display: block;
+    line-height: 60px;
+    padding: 0 26px;
+    text-decoration: none;
+    border-left: 1px solid #2e2e2e;
+    font-family: Montserrat, sans-serif;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.nav li a:hover {
+    background-color: #2e2e2e;
+}
+
+#search {
+    width: 357px;
+    margin: 4px;
+}
+#search-text{
+    width: 297px;
+    padding: 15px 0 15px 20px;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    border: 0 none;
+    height: 52px;
+    margin-right: 0;
+    color: white;
+    outline: none;
+    background: #1f7f5c;
+    float: left;
+    box-sizing: border-box;
+    transition: all 0.15s;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: white;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: white;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: white;
+}
+#search-text:focus {
+    background: rgb(64, 151, 119);
+}
+#search-button {
+    border: 0 none;
+    background: #1f7f5c url("/assets/search.png") center no-repeat;
+    width: 60px;
+    float: left;
+    padding: 0;
+    text-align: center;
+    height: 52px;
+    cursor: pointer;
+}

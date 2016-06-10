@@ -9,7 +9,7 @@
     <body  id="app-layout">
         <!-- Stylesheets -->
         <link rel="stylesheet" type="text/css" href="/public/css/company.css">
-        <link rel="stylesheet" href="/public/css/styles.css">
+        <link rel="stylesheet" href="/public/css/home.css">
         <link rel="stylesheet" href="/public/jspkg-archive/jquery.dynatable.css">
 
         <!-- Scripts -->
@@ -17,11 +17,17 @@
         <script src="/public/scripts/script.js"></script>
         <script src="/public/jspkg-archive/jquery.dynatable.js"></script>
         
-        <div id='cssmenu'>
-            <ul>
+        <div id='topbar'>
+            <ul class="nav">
                 <li><a href='/'>Home</a></li>
                 <li><a href='#'>About</a></li>
                 <li><a href='#'>Contact</a></li>
+                <li id="search">
+                    <form action="" method="get">
+                        <input type="text" name="search-text" id="search-text" placeholder="Search">
+                        <input type="button" name="search-button" id="search-button">
+                    </form>
+                </li>
             </ul>
         </div>
         <div id="companyinfo">
@@ -31,7 +37,7 @@
              </div>
             <hr>
             <div id="company-chart">
-                <table id="chart" class="table table-bordered">
+                <table id="chart-1" class="table table-bordered">
                     <h3> Valuation Measures </h3>
                     <thead>
                         <tr>
@@ -79,10 +85,130 @@
                     </tbody>
                 </table>
             </div>
+            
+            <div id="company-income-statement">
+                <table id="chart-2" class="table table-bordered">
+                    <h3> Income Statement </h3>
+                    <thead>
+                        <tr>
+                            <th>Statistic</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Revenue (ttm)</td>
+                            <td>${revenue}</td>
+                        </tr>
+                        <tr>
+                            <td>Revenue Per Share (ttm)</td>
+                            <td>${revenuePerShare}</td>
+                        </tr>
+                        <tr>
+                            <td>Quarterly Revenue Growth</td>
+                            <td>${qtrlyRevenueGrowth}</td>
+                        </tr>
+                        <tr>
+                            <td>Gross Profit (ttm)</td>
+                            <td>${grossProfit}</td>
+                        </tr>
+                        <tr>
+                            <td>EBITDA (ttm)</td>
+                            <td>${EBITDA}</td>
+                        </tr>
+                        <tr>
+                            <td>Net Income Avl to Common (ttm)</td>
+                            <td>${netIncomeAvlToCommon}</td>
+                        </tr>
+                        <tr>
+                            <td>Diluted EPS</td>
+                            <td>${dilutedEPS}</td>
+                        </tr>
+                        <tr>
+                            <td>Quarterly EarningsGrowth (yoy)</td>
+                            <td>${qtrlyEarningsGrowth}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div id="company-balance-sheet">
+                <table id="chart-3" class="table table-bordered">
+                    <h3> Balance Sheet </h3>
+                    <thead>
+                        <tr>
+                            <th>Statistic</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Cash (mrq)</td>
+                            <td>${totalCash}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Cash Per Share (mrq)</td>
+                            <td>${totalCashPerShare}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Debt (mrq)</td>
+                            <td>${totalDebt}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Debt/Equity (mrq)</td>
+                            <td>${totalDebtEquity}</td>
+                        </tr>
+                        <tr>
+                            <td>Current Ratio (mrq)</td>
+                            <td>${currentRatio}</td>
+                        </tr>
+                        <tr>
+                            <td>Book Value Per Share (mrq)</td>
+                            <td>${bookValuePerShare}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
     <script type="text/javascript">
-        $('#chart').bind('dynatable:preinit', function(e, dynatable) {
+        $('#chart-1').bind('dynatable:preinit', function(e, dynatable) {
+            dynatable.utility.textTransform.myNewStyle = function(text) {
+                return text
+                            .replace(/\s+/, '_')
+                            .replace(/[A-Z]/, function($1){ return $1 + $1 });
+           };
+        }).dynatable({
+                    table: {
+                        defaultColumnIdStyle: 'myNewStyle'
+                            },
+                            features: {
+                                paginate: false,
+                                search: false,
+                                recordCount: false,
+                                perPageSelect: false
+                             }
+        });
+            
+            $('#chart-2').bind('dynatable:preinit', function(e, dynatable) {
+            dynatable.utility.textTransform.myNewStyle = function(text) {
+                return text
+                            .replace(/\s+/, '_')
+                            .replace(/[A-Z]/, function($1){ return $1 + $1 });
+           };
+        }).dynatable({
+                    table: {
+                        defaultColumnIdStyle: 'myNewStyle'
+                            },
+                            features: {
+                                paginate: false,
+                                search: false,
+                                recordCount: false,
+                                perPageSelect: false
+                             }
+        });
+            $('#chart-3').bind('dynatable:preinit', function(e, dynatable) {
             dynatable.utility.textTransform.myNewStyle = function(text) {
                 return text
                             .replace(/\s+/, '_')
