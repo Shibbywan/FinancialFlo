@@ -2,3 +2,17 @@
     text-decoration: none;
     font-style: normal;
 }
+
+.table {
+    float: left;
+    margin-bottom: 15px;
+    margin-right: 25px;
+    display: table;
+    width: 45%;
+}
+
+#company-body {
+    margin: 0 auto;
+    width: 1250px;
+}
+

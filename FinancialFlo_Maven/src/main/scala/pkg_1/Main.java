@@ -14,6 +14,11 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -108,10 +113,24 @@ public class Main {
             var.put("ask", k.getAsk());
             return var;
     }
-    
-    public static void main(String[] args) throws IOException, TemplateException {
+    private static List<String> getSearchResults(String str, Connection con) throws SQLException {
+        List<String> list = new ArrayList<>();
+        String queryString = "Select DISTINCT symbol, name, exchange, country FROM company WHERE symbol LIKE '" + str + "' OR name LIKE '" + str +"' OR exchange LIKE '" + str +"' OR country LIKE '" + str + "'";
+        Statement statement = con.createStatement();
+        ResultSet rs = statement.executeQuery(queryString);
+        while (rs.next()) {
+            String t = rs.getString("symbol");
+            list.add(t);
+        }
+        return list;
+    }
+    public static void main(String[] args) throws IOException, TemplateException, SQLException, ClassNotFoundException {
         TreeMap<String, Company> map = new TreeMap<>();
         Model model = new Model(map);
+        String url = "jdbc:sqlserver://localhost:1433;" + 
+                "databaseName=FF_DB;user=shibby;password=crimson";
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection conn = DriverManager.getConnection(url);
         externalStaticFileLocation("src/main/resources");
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
         Configuration freeMarkerConfiguration = new Configuration();
@@ -140,12 +159,20 @@ public class Main {
             } else {
                 companies.add(model.getCompany(sym));
             }
-            println(companies.get(0).pegRatio);
-            println(companies.get(1).pegRatio);
             var.put("companies", companies);
             //Company k = model.getCompany(sym);
             //Map<String, Object> var = populateMap(k);
             return freeMarkerEngine.render(new ModelAndView(var,"views/company.ftl"));
+        });
+        
+        get("/search/:query", (req, res) -> {
+            Map<String, Object> var = new HashMap<>();
+            String query = req.params(":query");
+            String result = java.net.URLDecoder.decode(query, "UTF-8");
+            List<String> results = new ArrayList();
+            results = getSearchResults(result, conn);
+            var.put("results", results);
+            return freeMarkerEngine.render(new ModelAndView(var, "views/search.ftl"));
         });
         
     }
