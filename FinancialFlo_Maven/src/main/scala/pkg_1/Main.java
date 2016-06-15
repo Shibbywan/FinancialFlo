@@ -13,7 +13,6 @@ import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,11 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 import static scala.Console.println;
 import spark.ModelAndView;
-import spark.Spark;
 import static spark.Spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -115,7 +111,7 @@ public class Main {
     }
     private static List<String> getSearchResults(String str, Connection con) throws SQLException {
         List<String> list = new ArrayList<>();
-        String queryString = "Select DISTINCT symbol, name, exchange, country FROM company WHERE symbol LIKE '" + str + "' OR name LIKE '" + str +"' OR exchange LIKE '" + str +"' OR country LIKE '" + str + "'";
+        String queryString = "Select DISTINCT symbol, name, exchange, country FROM company WHERE symbol LIKE '%" + str + "%' OR name LIKE '%" + str +"%' OR exchange LIKE '%" + str +"%' OR country LIKE '%" + str + "%'";
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery(queryString);
         while (rs.next()) {

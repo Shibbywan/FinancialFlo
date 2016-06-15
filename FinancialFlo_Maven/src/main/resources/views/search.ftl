@@ -23,9 +23,9 @@
                 <li><a href='#'>About</a></li>
                 <li><a href='#'>Contact</a></li>
                 <li id="search">
-                    <form action="" method="get">
+                    <form method="get" action="javascript:window.location.assign('/search/' + document.getElementById('search-text').value);">
                         <input type="text" name="search-text" id="search-text" placeholder="Search">
-                        <input type="button" name="search-button" id="search-button">
+                        <input type="button" name="search-button" id="search-button" onclick="searchFunction();">
                     </form>
                 </li>
             </ul>
@@ -38,3 +38,12 @@
             <li><a href="/company/${result}">${result}</a></li>
         </#list>
         </ul>
+        </body>
+    </html>
+
+<script>
+    function searchFunction() {
+        window.location="/search/" + document.getElementById('search-text').value;
+    }
+</script>
+

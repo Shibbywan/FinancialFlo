@@ -23,7 +23,7 @@
                 <li><a href='#'>About</a></li>
                 <li><a href='#'>Contact</a></li>
                 <li id="search">
-                    <form action="" method="get">
+                    <form action="javascript:window.location.assign('/search/' + document.getElementById('search-text').value);" method="get">
                         <input type="text" name="search-text" id="search-text" placeholder="Search">
                         <input type="button" name="search-button" id="search-button">
                         </form>

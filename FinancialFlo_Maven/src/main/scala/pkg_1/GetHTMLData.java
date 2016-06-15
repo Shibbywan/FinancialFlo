@@ -15,6 +15,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import static scala.Console.println;
 
 /**
  *
@@ -35,11 +36,18 @@ public class GetHTMLData {
         int z = -1;
 
         String link = "https://finance.yahoo.com/q/ks?s=" + company;
+        String comp = "https://finance.yahoo.com/q/co?s=" + company;
         HttpURLConnection con = (HttpURLConnection) new URL(link).openConnection();
         con.setInstanceFollowRedirects(false);
         con.connect();
         int responseCode = con.getResponseCode();
-                          URL url = new URL(s1 + company + s2);
+        
+        HttpURLConnection con2 = (HttpURLConnection) new URL(comp).openConnection();
+        con2.setInstanceFollowRedirects(false);
+        con2.connect();
+        int responseCode2 = con2.getResponseCode();
+        
+        URL url = new URL(s1 + company + s2);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/xml");
@@ -70,10 +78,9 @@ public class GetHTMLData {
 
             }
         }
-        if (responseCode == 200) {
+        if (responseCode == 200 && responseCode2 == 200) {
         
             Document doc = (Document) Jsoup.connect(link).get();
-
             Elements ps2 = (Elements) doc.select("h2");
             String[] parts2 = Jsoup.parse(ps2.toString()).text().split(company);
             Elements ps = (Elements) doc.select("tbody");
@@ -272,6 +279,8 @@ public class GetHTMLData {
                 }
                 z++;
             }
+            
+            
             Company c = new Company(company, companyName, exchange, marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
                     fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
                     dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
