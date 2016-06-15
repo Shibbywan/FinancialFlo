@@ -31,9 +31,11 @@
             </ul>
         </div>
         <div id="companyinfo">
-            <div id="companyheader"> 
-                <h1> ${companyName} </h1>
-                <h3> ${symbol} - ${stockExchange} <span class="quote">${ask}</span> <span class="change">${change}</span> </h3>
+            <div id="companyheader">
+                <#list companies as company>
+                    <h1> ${company.companyName} </h1>
+                    <h3> ${company.symbol} - ${company.stockExchange} <span class="quote">${company.ask}</span> <span class="change">${company.change}</span> </h3>
+                </#list>
              </div>
             <hr>
             <div id="company-chart">
@@ -42,45 +44,59 @@
                     <thead>
                         <tr>
                             <th>Statistic</th>
-                            <th>Value</th>
+                            <#list companies as company>
+                                <th>${company.symbol}</th>
+                            </#list>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Market Cap</td>
-                            <td>${marketCap}</td>
+                            <#list companies as company>
+                                <td>${company.marketCap}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Enterprise Value</td>
-                            <td>${enterpriseValue}</td>
+                            <#list companies as company>
+                                <td>${company.enterpriseValue}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Trailing P/E</td>
-                            <td>${trailingPE}</td>
+                            <#list companies as company>
+                                <td>${company.trailingPE}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Forward P/E</td>
-                            <td>${forwardPE}</td>
-                        </tr>
-                        <tr>
-                            <td>PEG Ratio</td>
-                            <td>${pegRatio}</td>
+                            <#list companies as company>
+                                <td>${company.forwardPE}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Price/Sales</td>
-                            <td>${priceSales}</td>
+                            <#list companies as company>
+                                <td>${company.priceSales}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Price/Book</td>
-                            <td>${priceBook}</td>
+                            <#list companies as company>
+                                <td>${company.priceBook}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Enterprise Value/Revenue</td>
-                            <td>${enterpriseValueRevenue}</td>
+                            <#list companies as company>
+                                <td>${company.enterpriseValueRevenue}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Enterprise Value/EBITDA</td>
-                            <td>${enterpriseValueEBIDTA}</td>
+                            <#list companies as company>
+                                <td>${company.enterpriseValueEBIDTA}</td>
+                            </#list>
                         </tr>
                     </tbody>
                 </table>
@@ -92,41 +108,59 @@
                     <thead>
                         <tr>
                             <th>Statistic</th>
-                            <th>Value</th>
+                            <#list companies as company>
+                                <th>${company.symbol}</th>
+                            </#list>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Revenue (ttm)</td>
-                            <td>${revenue}</td>
+                            <#list companies as company>
+                                <td>${company.revenue}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Revenue Per Share (ttm)</td>
-                            <td>${revenuePerShare}</td>
+                            <#list companies as company>
+                                <td>${company.revenuePerShare}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Quarterly Revenue Growth</td>
-                            <td>${qtrlyRevenueGrowth}</td>
+                            <#list companies as company>
+                                <td>${company.qtrlyRevenueGrowth}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Gross Profit (ttm)</td>
-                            <td>${grossProfit}</td>
+                            <#list companies as company>
+                                <td>${company.grossProfit}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>EBITDA (ttm)</td>
-                            <td>${EBITDA}</td>
+                            <#list companies as company>
+                                <td>${company.EBITDA}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Net Income Avl to Common (ttm)</td>
-                            <td>${netIncomeAvlToCommon}</td>
+                            <#list companies as company>
+                                <td>${company.netIncomeAvlToCommon}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Diluted EPS</td>
-                            <td>${dilutedEPS}</td>
+                            <#list companies as company>
+                                <td>${company.dilutedEPS}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Quarterly EarningsGrowth (yoy)</td>
-                            <td>${qtrlyEarningsGrowth}</td>
+                            <#list companies as company>
+                                <td>${company.qtrlyEarningsGrowth}</td>
+                            </#list>
                         </tr>
                     </tbody>
                 </table>
@@ -139,33 +173,47 @@
                     <thead>
                         <tr>
                             <th>Statistic</th>
-                            <th>Value</th>
+                            <#list companies as company>
+                                <th>${company.symbol}</th>
+                            </#list>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Total Cash (mrq)</td>
-                            <td>${totalCash}</td>
+                            <#list companies as company>
+                                <td>${company.totalCash}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Total Cash Per Share (mrq)</td>
-                            <td>${totalCashPerShare}</td>
+                            <#list companies as company>
+                                <td>${company.totalCashPerShare}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Total Debt (mrq)</td>
-                            <td>${totalDebt}</td>
+                            <#list companies as company>
+                                <td>${company.totalDebt}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Total Debt/Equity (mrq)</td>
-                            <td>${totalDebtEquity}</td>
+                            <#list companies as company>
+                                <td>${company.totalDebtEquity}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Current Ratio (mrq)</td>
-                            <td>${currentRatio}</td>
+                            <#list companies as company>
+                                <td>${company.currentRatio}</td>
+                            </#list>
                         </tr>
                         <tr>
                             <td>Book Value Per Share (mrq)</td>
-                            <td>${bookValuePerShare}</td>
+                            <#list companies as company>
+                                <td>${company.bookValuePerShare}</td>
+                            </#list>
                         </tr>
                     </tbody>
                 </table>

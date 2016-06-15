@@ -15,12 +15,14 @@ import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
+import static scala.Console.println;
 import spark.ModelAndView;
 import spark.Spark;
 import static spark.Spark.*;
@@ -124,9 +126,25 @@ public class Main {
         
         get("/company/:symbol", (req, res) -> {
             List<String> data = new ArrayList<>();
+            List<Company> companies = new ArrayList<>();
+            Map<String, Object> var = new HashMap<>();
             String sym = req.params(":symbol");
-            Company k = model.getCompany(sym);
-            Map<String, Object> var = populateMap(k);
+            if (sym.contains("+")) {
+                String[] arr = sym.split("\\+");
+                println(Arrays.toString(arr));
+                for(String k : arr) {
+                    companies.add(model.getCompany(k));
+                }
+                for (int i=0; i < companies.size(); i++)
+                    println(companies.get(i).companyName);
+            } else {
+                companies.add(model.getCompany(sym));
+            }
+            println(companies.get(0).pegRatio);
+            println(companies.get(1).pegRatio);
+            var.put("companies", companies);
+            //Company k = model.getCompany(sym);
+            //Map<String, Object> var = populateMap(k);
             return freeMarkerEngine.render(new ModelAndView(var,"views/company.ftl"));
         });
         
