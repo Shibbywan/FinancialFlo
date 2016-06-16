@@ -114,16 +114,31 @@ public class Main {
             var.put("ask", k.getAsk());
             return var;
     }
-    private static List<String> getSearchResults(String str, Connection con) throws SQLException {
+    private static String getSearchResults(String str, Connection con) throws SQLException {
         List<String> list = new ArrayList<>();
         String queryString = "Select DISTINCT symbol, name, exchange, country FROM company WHERE symbol LIKE '%" + str + "%' OR name LIKE '%" + str +"%' OR exchange LIKE '%" + str +"%' OR country LIKE '%" + str + "%'";
+        String results = "<thead>"
+                + "<tr>"
+                + "<th>Symbol</th>"
+                + "<th>Name</th>"
+                + "<th>Exchange</th>"
+                + "<th>Country</th>"
+                + "</thead>"
+                + "<tbody>";
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery(queryString);
         while (rs.next()) {
-            String t = rs.getString("symbol");
-            list.add(t);
+            //String t = rs.getString("symbol");
+            results += "<tr>";
+            results += "<td><a href='/company/" + rs.getString("symbol") + "'>" + rs.getString("symbol") + "</a></td>";
+            results += "<td>" + rs.getString("name") + "</td>";
+            results += "<td>" + rs.getString("exchange") + "</td>";
+            results += "<td>" + rs.getString("country") + "</td>";
+            results += "</tr>";
+            //list.add(t);
         }
-        return list;
+        results +="</tbody>";
+        return results;
     }
     public static void main(String[] args) throws IOException, TemplateException, SQLException, ClassNotFoundException {
         TreeMap<String, Company> map = new TreeMap<>();
@@ -183,8 +198,7 @@ public class Main {
             Map<String, Object> var = new HashMap<>();
             String query = req.params(":query");
             String result = java.net.URLDecoder.decode(query, "UTF-8");
-            List<String> results = new ArrayList();
-            results = getSearchResults(result, conn);
+            String results = getSearchResults(result, conn);
             var.put("results", results);
             return freeMarkerEngine.render(new ModelAndView(var, "views/search.ftl"));
         });

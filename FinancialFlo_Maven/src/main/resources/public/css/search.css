@@ -1,0 +1,7 @@
+.table {
+    float: left;
+    margin-bottom: 15px;
+    margin-right: 25px;
+    display: table;
+    width: 45%;
+}

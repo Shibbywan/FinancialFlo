@@ -40,7 +40,8 @@
             <div id="competitors">
                 <h3>Competitors</h3>
                 <#list competitors as comp>
-                    <p><a href="/company/${comp}">${comp}</a><p>
+                    <a href="/company/${comp}">${comp}</a>
+                    <br>
                 </#list>
             </div>
             <hr>

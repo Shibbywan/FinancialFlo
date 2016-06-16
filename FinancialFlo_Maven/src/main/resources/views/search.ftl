@@ -8,7 +8,7 @@
         </head>
     <body  id="app-layout">
         <!-- Stylesheets -->
-        <link rel="stylesheet" type="text/css" href="/public/css/company.css">
+        <link rel="stylesheet" type="text/css" href="/public/css/search.css">
         <link rel="stylesheet" href="/public/css/home.css">
         <link rel="stylesheet" href="/public/jspkg-archive/jquery.dynatable.css">
 
@@ -33,11 +33,9 @@
         
         <h2> Search Results </h2>
         <hr>
-        <ul>
-        <#list results as result>
-            <li><a href="/company/${result}">${result}</a></li>
-        </#list>
-        </ul>
+        <table id="chart-1" class="table table-bordered">
+            ${results}
+        </table>
         </body>
     </html>
 
@@ -45,5 +43,22 @@
     function searchFunction() {
         window.location="/search/" + document.getElementById('search-text').value;
     }
+    $('#chart-1').bind('dynatable:preinit', function(e, dynatable) {
+        dynatable.utility.textTransform.myNewStyle = function(text) {
+            return text
+                        .replace(/\s+/, '_')
+                        .replace(/[A-Z]/, function($1){ return $1 + $1 });
+       };
+    }).dynatable({
+                table: {
+                    defaultColumnIdStyle: 'myNewStyle'
+                        },
+                        features: {
+                            paginate: false,
+                            search: false,
+                            recordCount: false,
+                            perPageSelect: false
+                         }
+    });
 </script>
 
