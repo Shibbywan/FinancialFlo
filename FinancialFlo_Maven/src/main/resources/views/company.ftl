@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html  lang="en">
+<html lang="en">
     <head>
         <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
         <meta  http-equiv="X-UA-Compatible"  content="IE=edge">
         <meta  name="viewport"  content="width=device-width, initial-scale=1">
         <title>FinancialFlo</title>
         </head>
-    <body  id="app-layout">
+    <body id="app-layout">
         <!-- Stylesheets -->
         <link rel="stylesheet" type="text/css" href="/public/css/company.css">
         <link rel="stylesheet" href="/public/css/home.css">
@@ -33,10 +33,16 @@
         <div id="companyinfo">
             <div id="companyheader">
                 <#list companies as company>
-                <h1> ${company.companyName} </h1>
-                <h3> ${company.symbol} - ${company.stockExchange} <span class="quote">${company.ask}</span> <span class="change">${company.change}</span> </h3>
+                    <h1> ${company.companyName} </h1>
+                    <h3> ${company.symbol} - ${company.stockExchange} <span class="quote">${company.ask}</span> <span class="change">${company.change}</span> </h3>
                 </#list>
                 </div>
+            <div id="competitors">
+                <h3>Competitors</h3>
+                <#list competitors as comp>
+                    <p><a href="/company/${comp}">${comp}</a><p>
+                </#list>
+            </div>
             <hr>
             <div id="company-body">
                 <div id="company-chart">

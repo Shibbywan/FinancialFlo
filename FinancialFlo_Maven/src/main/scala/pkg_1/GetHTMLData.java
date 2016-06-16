@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,7 +36,7 @@ public class GetHTMLData {
                 forwardAnnualDividendRate = null, forwardAnnualDividendYield = null, trailingAnnualDividendYieldp = null, trailingAnnualDividendYieldn = null, p_5YearAverageDividendYield = null,
                 payoutRatio = null, dividendDate = null, ex_DividendDate = null, lastSplitFactor = null, lastSplitDate = null, averageDailyVolume = null, change = null, daysLow = null, daysHigh = null, yearLow = null, yearHigh = null, marketCapitalization = null, lastTradePriceOnly = null, daysRange = null, symbol = null, volume = null, stockExchange = null, ask = null, t, temp = "";
         int z = -1;
-
+        ArrayList <String> compArray = new ArrayList<>();
         String link = "https://finance.yahoo.com/q/ks?s=" + company;
         String comp = "https://finance.yahoo.com/q/co?s=" + company;
         HttpURLConnection con = (HttpURLConnection) new URL(link).openConnection();
@@ -279,7 +281,17 @@ public class GetHTMLData {
                 }
                 z++;
             }
-            
+            Document document = (Document) Jsoup.connect(comp).get();
+            Elements ele = (Elements) document.getElementsByAttributeValueContaining("href", "q?s");
+            String example = ele.html();
+            if (example.contains("strong")) {
+                String[] splitArray = example.split("\n");
+                for (String splitArray1 : splitArray) {
+                    if (splitArray1.contains("strong"))
+                        compArray.add(Jsoup.parse(splitArray1).body().text());
+                }
+            }
+            println(compArray);
             
             Company c = new Company(company, companyName, exchange, marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
                     fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
@@ -287,7 +299,7 @@ public class GetHTMLData {
                     leveredFreeCashFlow, beta, p_52_WeekChange, SP50052_WeekChange, p_52_WeekHigh, p_52_WeekLow, p_50_DayMovingAverage, p_200_DayMovingAverage,
                     avgVol, avgVol1, sharesOutstanding, shareFloat, percentageHeldByInsiders, percentageHeldByInstitutions, sharesShort1, shortRatio, shortPercentage, sharesShort2,
                     forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield,
-                    payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate, averageDailyVolume, change, daysLow, daysHigh, yearLow, yearHigh, marketCapitalization, lastTradePriceOnly,daysRange, volume, stockExchange, ask);
+                    payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate, averageDailyVolume, change, daysLow, daysHigh, yearLow, yearHigh, marketCapitalization, lastTradePriceOnly,daysRange, volume, stockExchange, ask, compArray);
             return c;
         } else {
             return null;

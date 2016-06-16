@@ -28,6 +28,10 @@ import static scala.Console.println;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
+import spark.Spark;
+import org.xml.sax.SAXException;
+import java.net.MalformedURLException;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class Main {
     
@@ -140,7 +144,7 @@ public class Main {
         });
         
         get("/company/:symbol", (req, res) -> {
-            List<String> data = new ArrayList<>();
+            List<String> competitors = new ArrayList<>();
             List<Company> companies = new ArrayList<>();
             Map<String, Object> var = new HashMap<>();
             String sym = req.params(":symbol");
@@ -155,7 +159,9 @@ public class Main {
             } else {
                 companies.add(model.getCompany(sym));
             }
+            competitors = companies.get(0).competitors;
             var.put("companies", companies);
+            var.put("competitors", competitors);
             //Company k = model.getCompany(sym);
             //Map<String, Object> var = populateMap(k);
             return freeMarkerEngine.render(new ModelAndView(var,"views/company.ftl"));

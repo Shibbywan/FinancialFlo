@@ -1,5 +1,7 @@
 package pkg_1;
 
+import java.util.ArrayList;
+
 public class Company {
     public String symbol, companyName, exchange, marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
                 fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
@@ -9,6 +11,8 @@ public class Company {
                 forwardAnnualDividendRate, forwardAnnualDividendYield, trailingAnnualDividendYieldp, trailingAnnualDividendYieldn, p_5YearAverageDividendYield, 
                 payoutRatio, dividendDate, ex_DividendDate, lastSplitFactor, lastSplitDate, averageDailyVolume, change, daysLow, daysHigh, yearLow, yearHigh, marketCapitalization, lastTradePriceOnly,daysRange, volume, stockExchange, ask;
     
+    public ArrayList<String> competitors;
+    
     public Company(String symbol,String companyName,String exchange, String marketCap, String enterpriseValue, String trailingPE, String forwardPE, String pegRatio, String priceSales, String priceBook, String enterpriseValueRevenue,String enterpriseValueEBITDA,
                 String fiscalYearEnds, String mostRecentQuarter, String profitMargin,  String operatingMargin, String returnOnAssets, String returnOnEquity, String revenue, String revenuePerShare, String qtrlyRevenueGrowth, String grossProfit, String ebitda, String netIncomeAvlToCommon,
                 String dilutedEPS, String qtrlyEarningsGrowth, String totalCash,  String totalCashPerShare, String totalDebt, String totalDebtEquity, String currentRatio, String bookValuePerShare, String operatingCashFlow,
@@ -16,7 +20,7 @@ public class Company {
                 String avgVol1, String avgVol2, String sharesOutstanding, String shareFloat, String percentageHeldByInsiders, String percentageHeldByInstitutions, String sharesShort1, String shortRatio, String shortPercentage, String sharesShort2,
                 String forwardAnnualDividendRate, String forwardAnnualDividendYield, String trailingAnnualDividendYieldp, String trailingAnnualDividendYieldn, String p_5YearAverageDividendYield, 
                 String payoutRatio, String dividendDate, String ex_DividendDate, String lastSplitFactor, String lastSplitDate, String averageDailyVolume, String change, String daysLow, String daysHigh, String yearLow, String yearHigh, String marketCapitalization,
-                String lastTradePriceOnly, String daysRange, String volume, String stockExchange, String ask) {
+                String lastTradePriceOnly, String daysRange, String volume, String stockExchange, String ask, ArrayList<String> competitors) {
         this.symbol = symbol;
         this.companyName = companyName;
         this.exchange = exchange;
@@ -90,6 +94,7 @@ public class Company {
         this.volume = volume;
         this.stockExchange = stockExchange;
         this.ask = ask;
+        this.competitors = competitors;
     
     }
     public String getSymbol() {
@@ -382,4 +387,9 @@ public class Company {
     public String getAsk() {
         return this.ask;
     }
+    
+    public ArrayList<String> getCompetitors() {
+        return this.competitors;
+    }
 }
+
