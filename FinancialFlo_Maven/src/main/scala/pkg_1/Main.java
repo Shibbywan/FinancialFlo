@@ -31,6 +31,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 import spark.Spark;
 import org.xml.sax.SAXException;
 import java.net.MalformedURLException;
+import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Main {
@@ -143,27 +144,38 @@ public class Main {
             return freeMarkerEngine.render(new ModelAndView(var, "views/home.html"));
         });
         
-        get("/company/:symbol", (req, res) -> {
-            List<String> competitors = new ArrayList<>();
+        get("/compare/:symbol", (req, res) -> {
             List<Company> companies = new ArrayList<>();
             Map<String, Object> var = new HashMap<>();
             String sym = req.params(":symbol");
-            if (sym.contains("+")) {
+            if (sym.contains("+") && sym.charAt(sym.length() - 1) != '+') {
                 String[] arr = sym.split("\\+");
                 println(Arrays.toString(arr));
                 for(String k : arr) {
                     companies.add(model.getCompany(k));
                 }
-                for (int i=0; i < companies.size(); i++)
-                    println(companies.get(i).companyName);
             } else {
-                companies.add(model.getCompany(sym));
+                res.status(404);
+                return null;
             }
-            competitors = companies.get(0).competitors;
+            var.put("companies", companies);
+            return freeMarkerEngine.render(new ModelAndView(var,"views/compare.ftl"));
+        });
+        
+        get("/company/:symbol", (req, res) -> {
+            List<String> competitors = new ArrayList<>();
+            Map<String, Object> var = new HashMap<>();
+            List<Company> companies = new ArrayList<>();
+            String sym = req.params(":symbol");
+            Company k = model.getCompany(sym);
+            if (k.competitors != null) {
+                competitors=k.competitors;
+            } else {
+                competitors.add("N/A");
+            }
+            companies.add(k);
             var.put("companies", companies);
             var.put("competitors", competitors);
-            //Company k = model.getCompany(sym);
-            //Map<String, Object> var = populateMap(k);
             return freeMarkerEngine.render(new ModelAndView(var,"views/company.ftl"));
         });
         

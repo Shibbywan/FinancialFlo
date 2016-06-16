@@ -15,20 +15,3 @@
     margin: 0 auto;
     width: 1250px;
 }
-
-#competitors {
-    float: left;
-    width: 25%;
-    overflow: hidden;
-    height: 100%;
-}
-
-#companyheader {
-    width: 75%;
-    float: left;
-    overflow: hidden;
-}
-
-#companyinfo {
-    height: 120px;
-}
