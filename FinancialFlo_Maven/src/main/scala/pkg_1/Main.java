@@ -31,6 +31,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 import spark.Spark;
 import org.xml.sax.SAXException;
 import java.net.MalformedURLException;
+import java.text.DecimalFormat;
 import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -114,6 +115,37 @@ public class Main {
             var.put("ask", k.getAsk());
             return var;
     }
+    
+    private static List<String> getLocalMarketShare(List<Company> companies) {
+        List<String> marketShares = new ArrayList<>();
+        double sum = 0;
+        DecimalFormat df = new DecimalFormat("#.##");
+        List<Company> temp = companies;
+        List<Double> revenues = new ArrayList<>();
+        for (Company k : temp) {
+            String t = k.revenue;
+            if (t.contains("B")) {
+                t = t.replace("B","");
+                double d = Double.parseDouble(t);
+                d = d * 1000000000;
+                revenues.add(d);
+            }
+            if (t.contains("M")) {
+                t = t.replace("M", "");
+                double d = Double.parseDouble(t);
+                d = d * 1000000;
+                revenues.add(d);
+            }
+        }
+        for (int i = 0; i < revenues.size(); i++) {
+            sum += revenues.get(i);
+        }
+        for (int i = 0; i < revenues.size(); i++) {
+            double k = Double.parseDouble(df.format(revenues.get(i)/sum));
+            marketShares.add(Double.toString(k));
+        }
+        return marketShares;
+    }
     private static String getSearchResults(String str, Connection con) throws SQLException {
         List<String> list = new ArrayList<>();
         String queryString = "Select DISTINCT symbol, name, exchange, country FROM company WHERE symbol LIKE '%" + str + "%' OR name LIKE '%" + str +"%' OR exchange LIKE '%" + str +"%' OR country LIKE '%" + str + "%'";
@@ -161,11 +193,12 @@ public class Main {
         
         get("/compare/:symbol", (req, res) -> {
             List<Company> companies = new ArrayList<>();
+            List<String> marketShare = new ArrayList<>();
+            List<String> temp = new ArrayList<>();
             Map<String, Object> var = new HashMap<>();
             String sym = req.params(":symbol");
             if (sym.contains("+") && sym.charAt(sym.length() - 1) != '+') {
                 String[] arr = sym.split("\\+");
-                println(Arrays.toString(arr));
                 for(String k : arr) {
                     companies.add(model.getCompany(k));
                 }
@@ -173,7 +206,11 @@ public class Main {
                 res.status(404);
                 return null;
             }
+            for (Company c : companies) {
+                marketShare.add(model.getMarketShare(c));
+            }
             var.put("companies", companies);
+            var.put("marketShare", marketShare);
             return freeMarkerEngine.render(new ModelAndView(var,"views/compare.ftl"));
         });
         
@@ -191,6 +228,7 @@ public class Main {
             companies.add(k);
             var.put("companies", companies);
             var.put("competitors", competitors);
+
             return freeMarkerEngine.render(new ModelAndView(var,"views/company.ftl"));
         });
         

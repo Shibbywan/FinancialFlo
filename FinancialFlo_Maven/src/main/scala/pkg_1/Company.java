@@ -1,6 +1,9 @@
 package pkg_1;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
+import static scala.Console.println;
 
 public class Company {
     public String symbol, companyName, exchange, marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
@@ -391,5 +394,7 @@ public class Company {
     public ArrayList<String> getCompetitors() {
         return this.competitors;
     }
+    
+    
 }
 

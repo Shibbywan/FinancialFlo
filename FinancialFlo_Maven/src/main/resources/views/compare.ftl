@@ -163,6 +163,12 @@
                                 <td>${company.qtrlyEarningsGrowth}</td>
                             </#list>
                                 </tr>
+                            <tr>
+                                <td>Market Share</td>
+                            <#list marketShare as market>
+                                <td>${market}</td>
+                            </#list>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -275,6 +281,8 @@
                             perPageSelect: false
                          }
     });
+        
+        
     </script>
 </html>
 
