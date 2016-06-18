@@ -63,10 +63,11 @@ public class GetHTMLData {
         docc.getDocumentElement().normalize();
 
         NodeList nl = docc.getElementsByTagName("results");
+        NodeList tes = docc.getElementsByTagName("AverageDailyVolume");
         int length = nl.getLength();
         for (int i = 0; i < length; i++) {
             Node firstNode = nl.item(i);
-            if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+            if (firstNode.getNodeType() == Node.ELEMENT_NODE && tes.getLength() > 0) {
                 Element firstElement = (Element) firstNode;
                 averageDailyVolume = docc.getElementsByTagName("AverageDailyVolume").item(0).getTextContent();
                 change = docc.getElementsByTagName("Change").item(0).getTextContent();

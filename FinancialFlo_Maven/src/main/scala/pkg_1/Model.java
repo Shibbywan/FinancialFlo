@@ -59,7 +59,7 @@ public class Model {
         int response = 0;
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        String queryString = "Select symbol from company where id BETWEEN " + Integer.toString(bound - 200) + " AND " + Integer.toString(bound);
+        String queryString = "Select symbol from company where id BETWEEN " + Integer.toString(bound - 200) + " , " + Integer.toString(bound);
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery(queryString);
         while (rs.next()) {
@@ -143,7 +143,6 @@ public class Model {
 
     public String getCompanyName(Connection con, String symbol) throws SQLException {
         String companyName = "";
-        println(symbol.trim());
         String queryString = "SELECT name FROM company WHERE symbol LIKE '" + symbol.trim() + "'";
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery(queryString);
@@ -154,11 +153,10 @@ public class Model {
     }
     
 
-    public int getRevenue(Connection con, int bound) throws SQLException, IOException, MalformedURLException, ParserConfigurationException, SAXException, ClassNotFoundException {
-        int response = 0;
+    public int getAndInsertData(Connection con, int bound) throws SQLException, IOException, MalformedURLException, ParserConfigurationException, SAXException, ClassNotFoundException {
         int keystats = 0;
-        int id = bound - 199;
-        String queryString = "Select symbol from company where id BETWEEN " + Integer.toString(id) + " AND " + Integer.toString(bound);
+        int id = bound;
+        String queryString = "Select symbol from company where id BETWEEN " + Integer.toString(id) + " AND " + Integer.toString(id + 200);
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery(queryString);
         Double rev = 0.0;
@@ -166,25 +164,25 @@ public class Model {
         while (rs.next()) {
             Company k = getCompany(rs.getString("symbol").trim());
             String t = k.revenue;
-            String marketCap = k.marketCap;
-            String enterpriseValue = k.enterpriseValue;
-            String trailingPE = k.trailingPE;
-            String priceSales = k.priceSales;
-            String priceBook = k.priceBook;
-            String enterpriseValueRevenue = k.enterpriseValue;
-            String enterpriseValueEBITDA = k.enterpriseValueEBITDA;
-            String revenuePerShare = k.revenuePerShare;
-            String qtrlyRevenueGrowth = k.qtrlyRevenueGrowth;
-            String grossProfit = k.grossProfit;
-            String ebitda = k.ebitda;
-            String netIncomeAvl = k.netIncomeAvlToCommon;
-            String dilutedEPS = k.dilutedEPS;
-            String totalCash = k.totalCash;
-            String totalCashPerShare = k.totalCashPerShare;
-            String totalDebt = k.totalDebt;
-            String totalDebtEquity = k.totalDebtEquity;
-            String currentRatio = k.currentRatio;
-            String bookValuePerShare = k.bookValuePerShare;
+            String marketCap = k.getMarketCap();
+            String enterpriseValue = k.getEnterpriseValue();
+            String trailingPE = k.getTrailingPE();
+            String priceSales = k.getPriceSales();
+            String priceBook = k.getPriceBook();
+            String enterpriseValueRevenue = k.getEnterpriseValueRevenue();
+            String enterpriseValueEBITDA = k.getEnterpriseValueEBIDTA();
+            String revenuePerShare = k.getRevenuePerShare();
+            String qtrlyRevenueGrowth = k.getQtrlyRevenueGrowth();
+            String grossProfit = k.getGrossProfit();
+            String ebitda = k.getEBITDA();
+            String netIncomeAvl = k.getnetIncomeAvlToCommon();
+            String dilutedEPS = k.getdilutedEPS();
+            String totalCash = k.gettotalCash();
+            String totalCashPerShare = k.gettotalCashPerShare();
+            String totalDebt = k.getTotalDebt();
+            String totalDebtEquity = k.getTotalDebtEquity();
+            String currentRatio = k.getCurrentRatio();
+            String bookValuePerShare = k.getBookValuePerShare();
             if (t.contains("B")) {
                 t = t.replace("B", "");
                 double d = Double.parseDouble(t);
@@ -210,24 +208,25 @@ public class Model {
                 rev = Double.parseDouble(df.format(d));
             }
 
-            if (t.equals("")) {
+            if (t.equals("") || t.equals(null)) {
                 rev = 0.0;
             }
-            if (!marketCap.equals(""))
+            if (rev != 0.0)
                 keystats = 1;
             
-            String queryInsert = "Update company Set qtrly_revenue = " + rev + " AND market_cap = '" + marketCap + "' AND enterprise_value = '" + enterpriseValue +
-                    "' AND trailing_pe = '" + trailingPE + "' AND price_sales = '" + priceSales + "' AND price_book = '" + priceBook + "' AND enterprise_value_revenue = '" +
-                    enterpriseValueRevenue + "' AND enterprise_value_ebitda = '" + enterpriseValueEBITDA + "' AND revenue_per_share = '" + revenuePerShare + 
-                    "' AND qtrly_revenue_growth = '" + qtrlyRevenueGrowth + "' AND gross_profit = '" + grossProfit + "' AND ebitda = '" + ebitda + "' AND net_income_avl_to_common = '" +
-                    netIncomeAvl + " AND diluted_eps = " + dilutedEPS + " AND total_cash = " + totalCash + " AND total_cash_per_share = " + totalCashPerShare +
-                    "' AND total_debt = '" + totalDebt + "' AND total_debt_equity = '" + totalDebtEquity + "' AND current_ratio = '" + currentRatio + 
-                    "' AND book_value_per_share = '" + bookValuePerShare + "' AND keystats = " + keystats + " WHERE id = " + Integer.toString(id);
+            String queryInsert = "Update company Set qtrly_revenue = " + rev + ",market_cap = '" + marketCap + "',enterprise_value = '" + enterpriseValue +
+                    "' , trailing_pe = '" + trailingPE + "', price_sales = '" + priceSales + "', price_book = '" + priceBook + "', enterprise_value_revenue = '" +
+                    enterpriseValueRevenue + "', enterprise_value_ebitda = '" + enterpriseValueEBITDA + "', revenue_per_share = '" + revenuePerShare + 
+                    "', qtrly_revenue_growth = '" + qtrlyRevenueGrowth + "', gross_profit = '" + grossProfit + "', ebitda = '" + ebitda + "', net_income_avl_to_common = '" +
+                    netIncomeAvl + "' , diluted_eps = '" + dilutedEPS + "' , total_cash = '" + totalCash + "' , total_cash_per_share = '" + totalCashPerShare +
+                    "', total_debt = '" + totalDebt + "', total_debt_equity = '" + totalDebtEquity + "', current_ratio = '" + currentRatio + 
+                    "', book_value_per_share = '" + bookValuePerShare + "', keystats = " + keystats + " WHERE id = " + Integer.toString(id);
+            println(queryInsert);
             Statement tempStatement = con.createStatement();
             tempStatement.executeUpdate(queryInsert);
             id++;
         }
-        return response;
+        return id;
     }
 
 }

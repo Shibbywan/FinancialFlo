@@ -125,282 +125,492 @@ public class Company {
     }
     
     public String getMarketCap() {
+        if (this.marketCap.equals("")) {
+            return null;
+        } else 
          return this.marketCap;
     }
     
     public String getEnterpriseValue() {
+         if (this.enterpriseValue.equals("")) {
+            return null;
+        } else 
         return this.enterpriseValue;
     }
     
     public String getTrailingPE() { 
+         if (this.trailingPE.equals("")) {
+            return null;
+        } else 
         return this.trailingPE;
     }
     
     public String getForwardPE() {
+         if (this.forwardPE.equals("")) {
+            return null;
+        } else 
         return this.forwardPE;
     }
     
     public String getPEGRatio() {
+         if (this.pegRatio.equals("")) {
+            return null;
+        } else 
         return this.pegRatio;
     }
     
     public String getPriceSales() {
+         if (this.priceSales.equals("")) {
+            return null;
+        } else 
         return this.priceSales;
     }
     
     public String getPriceBook() {
+         if (this.priceBook.equals("")) {
+            return null;
+        } else 
         return this.priceBook;
     }
     
     public String getEnterpriseValueRevenue() {
+         if (this.enterpriseValueRevenue.equals("")) {
+            return null;
+        } else 
         return this.enterpriseValueRevenue;
     }
     
     public String getEnterpriseValueEBIDTA() {
+         if (this.enterpriseValueEBITDA.equals("")) {
+            return null;
+        } else 
         return this.enterpriseValueEBITDA;
     }
     
     public String getFiscalYearEnds() {
+         if (this.fiscalYearEnds.equals("")) {
+            return null;
+        } else 
         return this.fiscalYearEnds;
     }
     
     public String getMostRecentQuarter() {
+         if (this.mostRecentQuarter.equals("")) {
+            return null;
+        } else 
         return this.mostRecentQuarter;
     }
     
     public String getProfitMargin() {
+         if (this.profitMargin.equals("")) {
+            return null;
+        } else 
         return this.profitMargin;
     }
     
     public String getOperatingMargin() {
+         if (this.operatingMargin.equals("")) {
+            return null;
+        } else 
         return this.operatingMargin;
     }
     
     public String getReturnOnAssets() {
+         if (this.returnOnAssets.equals("")) {
+            return null;
+        } else 
         return this.returnOnAssets;
     }
     
     public String getReturnOnEquity() {
+         if (this.returnOnEquity.equals("")) {
+            return null;
+        } else 
         return this.returnOnEquity;
     }
     
     public String getRevenue() {
+         if (this.revenue.equals("")) {
+            return null;
+        } else 
         return this.revenue;
     }
     
     public String getRevenuePerShare() {
+         if (this.revenuePerShare.equals("")) {
+            return null;
+        } else 
         return this.revenuePerShare;
     }
     
     public String getQtrlyRevenueGrowth() {
+         if (this.qtrlyRevenueGrowth.equals("")) {
+            return null;
+        } else 
         return this.qtrlyRevenueGrowth;
     }
     
     public String getGrossProfit() {
+     if (this.grossProfit.equals("")) {
+            return null;
+        } else 
         return this.grossProfit;
     }
     
     public String getEBITDA() {
+         if (this.ebitda.equals("")) {
+            return null;
+        } else 
         return this.ebitda;
     }
     
     public String getnetIncomeAvlToCommon() {
+         if (this.netIncomeAvlToCommon.equals("")) {
+            return null;
+        } else 
         return this.netIncomeAvlToCommon;
     }
     
     public String getdilutedEPS() {
+         if (this.dilutedEPS.equals("")) {
+            return null;
+        } else 
         return this.dilutedEPS;
     }
     
     public String getqtrlyEarningsGrowth() {
+         if (this.qtrlyEarningsGrowth.equals("")) {
+            return null;
+        } else 
         return this.qtrlyEarningsGrowth;
     }
     
     public String gettotalCash() {
+         if (this.totalCash.equals("")) {
+            return null;
+        } else 
         return this.totalCash;
     }
     
     public String gettotalCashPerShare() {
+         if (this.totalCashPerShare.equals("")) {
+            return null;
+        } else 
         return this.totalCashPerShare;
     }
     
     public String getTotalDebt() {
+         if (this.totalDebt.equals("")) {
+            return null;
+        } else 
         return this.totalDebt;
     }
     
     public String getTotalDebtEquity() {
+         if (this.totalDebtEquity.equals("")) {
+            return null;
+        } else 
         return this.totalDebtEquity;
     }
     
     public String getCurrentRatio() {
+         if (this.currentRatio.equals("")) {
+            return null;
+        } else 
         return this.currentRatio;
     }
     
     public String getBookValuePerShare() {
+         if (this.bookValuePerShare.equals("")) {
+            return null;
+        } else 
         return this.bookValuePerShare;
     }
     
     public String getOperatingCashFlow() {
+         if (this.operatingCashFlow.equals("")) {
+            return null;
+        } else 
         return this.operatingCashFlow;
     }
     
     public String getLeveredFreeCashFlow() {
+         if (this.leveredFreeCashFlow.equals("")) {
+            return null;
+        } else 
         return this.leveredFreeCashFlow;
     }
     
     public String getBeta() {
+         if (this.beta.equals("")) {
+            return null;
+        } else 
         return this.beta;
     }
     
     public String getP_52_WeekChange() {
+         if (this.p_52_WeekChange.equals("")) {
+            return null;
+        } else 
         return this.p_52_WeekChange;
     }
     
     public String getSP50052_WeekChange() {
+         if (this.SP50052_WeekChange.equals("")) {
+            return null;
+        } else 
         return this.SP50052_WeekChange;
     }
     
     public String getP_52_WeekHigh() {
+         if (this.p_52_WeekHigh.equals("")) {
+            return null;
+        } else 
         return this.p_52_WeekHigh;
     }
     
     public String getP_52_WeekLow() {
+         if (this.p_52_WeekLow.equals("")) {
+            return null;
+        } else 
         return this.p_52_WeekLow;
     }
     
     public String getP_50_DayMovingAverage() {
+         if (this.p_50_DayMovingAverage.equals("")) {
+            return null;
+        } else 
         return this.p_50_DayMovingAverage;
     }
     
     public String getP_200_DayMovingAverage() {
+         if (this.p_200_DayMovingAverage.equals("")) {
+            return null;
+        } else 
         return this.p_200_DayMovingAverage;
     }
     
     public String getAvgVol1() {
+         if (this.avgVol1.equals("")) {
+            return null;
+        } else 
         return this.avgVol1;
     }
     
     public String getAvgVol2() {
+         if (this.avgVol2.equals("")) {
+            return null;
+        } else 
         return this.avgVol2;
     }
     
     public String getSharesOutstanding() {
+         if (this.sharesOutstanding.equals("")) {
+            return null;
+        } else 
         return this.sharesOutstanding;
     }
     
     public String getShareFloat() {
+         if (this.shareFloat.equals("")) {
+            return null;
+        } else 
         return this.shareFloat;
     }
     
     public String getPercentageHeldByInsiders() {
+         if (this.percentageHeldByInsiders.equals("")) {
+            return null;
+        } else 
         return this.percentageHeldByInsiders;
     }
     
     public String getPercentageHeldByInstitutions() {
+         if (this.percentageHeldByInstitutions.equals("")) {
+            return null;
+        } else 
         return this.percentageHeldByInstitutions;
     }
     
     public String getSharesShort1() {
+         if (this.sharesShort1.equals("")) {
+            return null;
+        } else 
         return this.sharesShort1;
     }
     
     public String getShortRatio() {
+         if (this.shortRatio.equals("")) {
+            return null;
+        } else 
         return this.shortRatio;
     }
     
     public String getShortPercentage() {
+         if (this.shortPercentage.equals("")) {
+            return null;
+        } else 
         return this.shortPercentage;
     }
     
     public String getSharesShort2() {
+         if (this.sharesShort2.equals("")) {
+            return null;
+        } else 
         return this.sharesShort2;
     }
     
     public String getForwardAnnualDividendRate() {
+         if (this.forwardAnnualDividendRate.equals("")) {
+            return null;
+        } else 
         return this.forwardAnnualDividendRate;
     }
     
     public String getForwardAnnualDividendYield() {
+         if (this.forwardAnnualDividendYield.equals("")) {
+            return null;
+        } else 
         return this.forwardAnnualDividendYield;
     }
     
     public String getTrailingAnnualDividendYieldp() {
+         if (this.trailingAnnualDividendYieldp.equals("")) {
+            return null;
+        } else 
         return this.trailingAnnualDividendYieldp;
     }
     
     public String getTrailingAnnualDividendYieldn() {
+         if (this.trailingAnnualDividendYieldn.equals("")) {
+            return null;
+        } else 
         return this.trailingAnnualDividendYieldn;
     }
     
     public String getP_5YearAverageDividendYield() {
+         if (this.p_5YearAverageDividendYield.equals("")) {
+            return null;
+        } else 
         return this.p_5YearAverageDividendYield;
     }
     
     public String getPayoutRatio() {
+         if (this.payoutRatio.equals("")) {
+            return null;
+        } else 
         return this.payoutRatio;
     }
     
     public String getDividendDate() {
+         if (this.dividendDate.equals("")) {
+            return null;
+        } else 
         return this.dividendDate;
     }
     
     public String getEx_DividendDate() {
+         if (this.ex_DividendDate.equals("")) {
+            return null;
+        } else 
         return this.ex_DividendDate;
     }
     
     public String getLastSplitFactor() {
+         if (this.lastSplitFactor.equals("")) {
+            return null;
+        } else 
         return this.lastSplitFactor;
     }
     
     public String getLastSplitDate() {
+         if (this.lastSplitDate.equals("")) {
+            return null;
+        } else 
         return this.lastSplitDate;
     }
     
     public String getAverageDailyVolume() {
+         if (this.averageDailyVolume.equals("")) {
+            return null;
+        } else 
         return this.averageDailyVolume;
     }
     
     public String getChange() {
+         if (this.change.equals("")) {
+            return null;
+        } else 
         return this.change;
     }
     
     public String getDaysLow() {
+         if (this.daysLow.equals("")) {
+            return null;
+        } else 
         return this.daysLow;
     }
     
     public String getDaysHigh() {
+         if (this.daysHigh.equals("")) {
+            return null;
+        } else 
         return this.daysHigh;
     }
     
     public String getYearLow() {
+         if (this.yearLow.equals("")) {
+            return null;
+        } else 
         return this.yearLow;
     }
     
     public String getYearHigh() {
+         if (this.yearHigh.equals("")) {
+            return null;
+        } else 
         return this.yearHigh;
     }
     
     public String getMarketCapitalization() {
+         if (this.marketCapitalization.equals("")) {
+            return null;
+        } else 
         return this.marketCapitalization;
     }
     
     public String getLastTradePriceOnly() {
+         if (this.lastTradePriceOnly.equals("")) {
+            return null;
+        } else 
         return this.lastTradePriceOnly;
     }
     
     public String getDaysRange() {
+         if (this.daysRange.equals("")) {
+            return null;
+        } else 
         return this.daysRange;
     }
     
     public String getVolume() {
+         if (this.volume.equals("")) {
+            return null;
+        } else 
         return this.volume;
     }
     
     public String getStockExchange() {
+         if (this.stockExchange.equals("")) {
+            return null;
+        } else 
         return this.stockExchange;
     }
     
     public String getAsk() {
+         if (this.ask.equals("")) {
+            return null;
+        } else 
         return this.ask;
     }
     
