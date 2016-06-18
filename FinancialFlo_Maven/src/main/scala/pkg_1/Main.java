@@ -31,8 +31,13 @@ import spark.template.freemarker.FreeMarkerEngine;
 import spark.Spark;
 import org.xml.sax.SAXException;
 import java.net.MalformedURLException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Main {
@@ -116,36 +121,7 @@ public class Main {
             return var;
     }
     
-    private static List<String> getLocalMarketShare(List<Company> companies) {
-        List<String> marketShares = new ArrayList<>();
-        double sum = 0;
-        DecimalFormat df = new DecimalFormat("#.##");
-        List<Company> temp = companies;
-        List<Double> revenues = new ArrayList<>();
-        for (Company k : temp) {
-            String t = k.revenue;
-            if (t.contains("B")) {
-                t = t.replace("B","");
-                double d = Double.parseDouble(t);
-                d = d * 1000000000;
-                revenues.add(d);
-            }
-            if (t.contains("M")) {
-                t = t.replace("M", "");
-                double d = Double.parseDouble(t);
-                d = d * 1000000;
-                revenues.add(d);
-            }
-        }
-        for (int i = 0; i < revenues.size(); i++) {
-            sum += revenues.get(i);
-        }
-        for (int i = 0; i < revenues.size(); i++) {
-            double k = Double.parseDouble(df.format(revenues.get(i)/sum));
-            marketShares.add(Double.toString(k));
-        }
-        return marketShares;
-    }
+
     private static String getSearchResults(String str, Connection con) throws SQLException {
         List<String> list = new ArrayList<>();
         String queryString = "Select DISTINCT symbol, name, exchange, country FROM company WHERE symbol LIKE '%" + str + "%' OR name LIKE '%" + str +"%' OR exchange LIKE '%" + str +"%' OR country LIKE '%" + str + "%'";
@@ -172,7 +148,7 @@ public class Main {
         results +="</tbody>";
         return results;
     }
-    public static void main(String[] args) throws IOException, TemplateException, SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, TemplateException, SQLException, ClassNotFoundException, MalformedURLException, ParserConfigurationException, SAXException {
         TreeMap<String, Company> map = new TreeMap<>();
         Model model = new Model(map);
         String url = "jdbc:sqlserver://localhost:1433;" + 
@@ -184,7 +160,7 @@ public class Main {
         Configuration freeMarkerConfiguration = new Configuration();
         freeMarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(Company.class, "/"));
         freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
-
+        model.getRevenue(conn, 200);
         
         get("/", (req, res) -> {
             Map<String, Object> var = new HashMap<>();
@@ -194,7 +170,6 @@ public class Main {
         get("/compare/:symbol", (req, res) -> {
             List<Company> companies = new ArrayList<>();
             List<String> marketShare = new ArrayList<>();
-            List<String> temp = new ArrayList<>();
             Map<String, Object> var = new HashMap<>();
             String sym = req.params(":symbol");
             if (sym.contains("+") && sym.charAt(sym.length() - 1) != '+') {
@@ -218,6 +193,7 @@ public class Main {
             List<String> competitors = new ArrayList<>();
             Map<String, Object> var = new HashMap<>();
             List<Company> companies = new ArrayList<>();
+            List<String> marketShare = new ArrayList<>();
             String sym = req.params(":symbol");
             Company k = model.getCompany(sym);
             if (k.competitors != null) {
@@ -226,9 +202,12 @@ public class Main {
                 competitors.add("N/A");
             }
             companies.add(k);
+            for (Company c : companies) {
+                marketShare.add(model.getMarketShare(c));
+            }
             var.put("companies", companies);
             var.put("competitors", competitors);
-
+            var.put("marketShare", marketShare);
             return freeMarkerEngine.render(new ModelAndView(var,"views/company.ftl"));
         });
         

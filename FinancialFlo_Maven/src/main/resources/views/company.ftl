@@ -33,17 +33,17 @@
         <div id="companyinfo">
             <div id="companyheader">
                 <#list companies as company>
-                    <h1> ${company.companyName} </h1>
-                    <h3> ${company.symbol} - ${company.stockExchange} <span class="quote">${company.ask}</span> <span class="change">${company.change}</span> </h3>
+                <h1> ${company.companyName} </h1>
+                <h3> ${company.symbol} - ${company.stockExchange} <span class="quote">${company.ask}</span> <span class="change">${company.change}</span> </h3>
                 </#list>
                 </div>
             <div id="competitors">
                 <h3>Competitors</h3>
                 <#list competitors as comp>
-                    <a href="/company/${comp}">${comp}</a>
-                    <br>
+                <a href="/company/${comp}">${comp}</a>
+                <br>
                 </#list>
-            </div>
+                </div>
             <hr>
             <div id="company-body">
                 <div id="company-chart">
@@ -168,6 +168,12 @@
                                 <td>Quarterly EarningsGrowth (yoy)</td>
                             <#list companies as company>
                                 <td>${company.qtrlyEarningsGrowth}</td>
+                            </#list>
+                                </tr>
+                            <tr>
+                                <td>Market Share</td>
+                            <#list marketShare as market>
+                                <td>${market}</td>
                             </#list>
                                 </tr>
                             </tbody>

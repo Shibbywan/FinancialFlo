@@ -1,11 +1,18 @@
 package pkg_1;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 import static scala.Console.println;
 
 public class Company {
+            TreeMap<String, Company> map = new TreeMap<>();
+    Model model;
     public String symbol, companyName, exchange, marketCap, enterpriseValue, trailingPE, forwardPE, pegRatio, priceSales, priceBook, enterpriseValueRevenue, enterpriseValueEBITDA,
                 fiscalYearEnds, mostRecentQuarter, profitMargin, operatingMargin, returnOnAssets, returnOnEquity, revenue, revenuePerShare, qtrlyRevenueGrowth, grossProfit, ebitda, netIncomeAvlToCommon,
                 dilutedEPS, qtrlyEarningsGrowth, totalCash, totalCashPerShare, totalDebt, totalDebtEquity, currentRatio, bookValuePerShare, operatingCashFlow,
@@ -16,16 +23,16 @@ public class Company {
     
     public ArrayList<String> competitors;
     
-    public Company(String symbol,String companyName,String exchange, String marketCap, String enterpriseValue, String trailingPE, String forwardPE, String pegRatio, String priceSales, String priceBook, String enterpriseValueRevenue,String enterpriseValueEBITDA,
+    public Company(String symbol,String exchange, String marketCap, String enterpriseValue, String trailingPE, String forwardPE, String pegRatio, String priceSales, String priceBook, String enterpriseValueRevenue,String enterpriseValueEBITDA,
                 String fiscalYearEnds, String mostRecentQuarter, String profitMargin,  String operatingMargin, String returnOnAssets, String returnOnEquity, String revenue, String revenuePerShare, String qtrlyRevenueGrowth, String grossProfit, String ebitda, String netIncomeAvlToCommon,
                 String dilutedEPS, String qtrlyEarningsGrowth, String totalCash,  String totalCashPerShare, String totalDebt, String totalDebtEquity, String currentRatio, String bookValuePerShare, String operatingCashFlow,
                 String leveredFreeCashFlow, String beta, String p_52_WeekChange, String SP50052_WeekChange, String p_52_WeekHigh, String p_52_WeekLow, String p_50_DayMovingAverage, String p_200_DayMovingAverage,
                 String avgVol1, String avgVol2, String sharesOutstanding, String shareFloat, String percentageHeldByInsiders, String percentageHeldByInstitutions, String sharesShort1, String shortRatio, String shortPercentage, String sharesShort2,
                 String forwardAnnualDividendRate, String forwardAnnualDividendYield, String trailingAnnualDividendYieldp, String trailingAnnualDividendYieldn, String p_5YearAverageDividendYield, 
                 String payoutRatio, String dividendDate, String ex_DividendDate, String lastSplitFactor, String lastSplitDate, String averageDailyVolume, String change, String daysLow, String daysHigh, String yearLow, String yearHigh, String marketCapitalization,
-                String lastTradePriceOnly, String daysRange, String volume, String stockExchange, String ask, ArrayList<String> competitors) {
+                String lastTradePriceOnly, String daysRange, String volume, String stockExchange, String ask, ArrayList<String> competitors) throws IOException, ClassNotFoundException, SQLException {
+        this.model = new Model(map);
         this.symbol = symbol;
-        this.companyName = companyName;
         this.exchange = exchange;
         this.marketCap = marketCap;
         this.enterpriseValue = enterpriseValue;
@@ -98,6 +105,12 @@ public class Company {
         this.stockExchange = stockExchange;
         this.ask = ask;
         this.competitors = competitors;
+        
+        String url = "jdbc:sqlserver://localhost:1433;" + 
+                "databaseName=FF_DB;user=shibby;password=crimson";
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection conn = DriverManager.getConnection(url);
+        this.companyName = model.getCompanyName(conn, this.symbol.trim());
     
     }
     public String getSymbol() {
