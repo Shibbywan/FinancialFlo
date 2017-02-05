@@ -314,3 +314,16 @@ a {
   display: inline-block;
   float: left;
 }
+
+.main-content {
+   background:white;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: absolute;
+    box-shadow: 10px 10px 5px grey;
+    border: 2px solid;
+    border-color: grey;
+    margin-top: 25px; 
+}
