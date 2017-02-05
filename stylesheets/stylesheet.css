@@ -243,3 +243,74 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+.main-page-container {
+
+    background:white;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: absolute;
+    box-shadow: 10px 10px 5px grey;
+    border: 2px solid;
+    border-color: grey;
+    margin-top: 25px;
+
+}
+
+.main-page-inner-1 {
+  height: 50%;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    position: relative;
+    margin: auto;
+    border-right: 2px black;
+  display: inline-block;
+  float: left;
+}
+
+.main-page-inner-2 {
+  height: 50%;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    position: relative;
+    margin: auto;
+    border: 2px black;
+    display: inline-block;
+    float: left;
+}
+
+.main-page-inner-3 {
+  height: 50%;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    position: relative;
+    margin: auto;
+    border: 2px black;
+  display: inline-block;
+  float: left;
+}
+
+.main-page-inner-4 {
+  height: 50%;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    position: relative;
+    margin: auto;
+    border: 2px black;
+  display: inline-block;
+  float: left;
+}
